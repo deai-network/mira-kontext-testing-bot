@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from .client import KontextClient
-from .models import ContextItem, MemoryMessage, QueryResult
+from .models import MemoryMessage, QueryResult
 from .session import ChatContext
 
 
@@ -78,6 +78,7 @@ class MemoryManager:
             principal=context.principal,
             limit=limit,
             content_kinds=kinds,
+            source_collections=context.source_collections_for_query,
             memory=context.to_api_format(),
         )
 
@@ -136,9 +137,11 @@ class MemoryManager:
                 context_parts.append(f"   {item['snippet']}")
                 if item["citations"]:
                     citation = item["citations"][0]
-                    context_parts.append(
-                        f"   [Source: {citation.get('source_system', 'unknown')}]"
-                    )
+                    if isinstance(citation, dict):
+                        source_system = citation.get("source_system", "unknown")
+                    else:
+                        source_system = "unknown"
+                    context_parts.append(f"   [Source: {source_system}]")
 
         if result["memory_items"]:
             context_parts.append("\n## Conversation History")

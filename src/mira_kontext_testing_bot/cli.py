@@ -2,14 +2,15 @@
 
 import asyncio
 import sys
+from pathlib import Path
 
 import click
 from rich.console import Console
 from rich.panel import Panel
 
 from .chat_interface import ChatInterface
-from .config import get_settings, load_env_file
 from .client import KontextClient
+from .config import get_settings, load_env_file
 from .test_runner import run_test_suite
 
 console = Console()
@@ -25,7 +26,7 @@ def cli(ctx: click.Context, env_file: str | None, api_url: str | None, token: st
     """Mira Kontext Testing Bot - CLI interface."""
     # Load environment file if specified
     if env_file:
-        load_env_file(env_file)
+        load_env_file(Path(env_file))
     else:
         load_env_file()
 

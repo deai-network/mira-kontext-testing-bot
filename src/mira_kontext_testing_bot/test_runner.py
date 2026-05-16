@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import time
-from typing import TYPE_CHECKING, Any, Awaitable, Callable
+from collections.abc import Awaitable, Callable
+from typing import TYPE_CHECKING, Any
 from uuid import uuid4
 
 from rich.console import Console
@@ -12,8 +13,8 @@ from rich.table import Table
 
 from .client import KontextClient
 from .config import get_settings
-from .models import Principal, Project, ScenarioOutcome, Session, SuiteOutcome
-from .session import ChatContext, get_session_manager
+from .models import Principal, ScenarioOutcome, SuiteOutcome
+from .session import get_session_manager
 
 if TYPE_CHECKING:
     from .client import KontextClient
@@ -249,7 +250,7 @@ class TestScenarios:
         """Test document retrieval by short ID."""
         # Ingest content first
         test_id = f"doc-test-{uuid4().hex[:8]}"
-        ingest_result = await client.ingest_record(
+        await client.ingest_record(
             content=f"Document content for retrieval test: {test_id}",
             source_system="test-docs",
             source_object_type="document",

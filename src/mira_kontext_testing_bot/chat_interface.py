@@ -30,7 +30,7 @@ class ChatInterface:
         self.client: KontextClient | None = None
         self.memory_manager: MemoryManager | None = None
         self.current_context: ChatContext | None = None
-        self.llm: LLMClient | MockLLMClient | None = None
+        self.llm: Any | None = None
 
     def print_banner(self) -> None:
         """Print the welcome banner."""
@@ -150,6 +150,14 @@ Any text not starting with `/` is sent as a user message and stored in conversat
         self.current_context = self.session_manager.create_context(
             project=project,
             session=session,
+            principal=self.current_context.principal if self.current_context else None,
+            mode=self.current_context.mode if self.current_context else "full",
+            source_collection_external_ids=(
+                self.current_context.source_collection_external_ids if self.current_context else None
+            ),
+            private_source_collection_external_id=(
+                self.current_context.private_source_collection_external_id if self.current_context else None
+            ),
         )
 
         self.console.print(f"[green]Switched to project:[/green] {project_id}")
@@ -193,6 +201,11 @@ Any text not starting with `/` is sent as a user message and stored in conversat
                 project=self.current_context.project,
                 session=self.current_context.session,
                 principal=principal,
+                mode=self.current_context.mode,
+                source_collection_external_ids=self.current_context.source_collection_external_ids,
+                private_source_collection_external_id=(
+                    self.current_context.private_source_collection_external_id
+                ),
             )
             self.console.print(f"[green]Switched user:[/green] {user_id}")
 
@@ -233,6 +246,9 @@ Any text not starting with `/` is sent as a user message and stored in conversat
             project=project,
             session=session,
             principal=self.current_context.principal,
+            mode=self.current_context.mode,
+            source_collection_external_ids=self.current_context.source_collection_external_ids,
+            private_source_collection_external_id=self.current_context.private_source_collection_external_id,
         )
 
         self.console.print(f"[green]Switched to session:[/green] {session_id}")
@@ -255,19 +271,44 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
         self.console.print(table)
 
+    def _require_sources(self, action: str) -> bool:
+        """Guard helper: deny actions that need source access in memory-only mode."""
+        if not self.current_context or self.current_context.allows_sources:
+            return True
+        self.console.print(
+            f"[dim]{action} suppressed: memory-only session is active.[/dim]"
+        )
+        return False
+
     async def handle_query(self, query_text: str) -> None:
         """Handle the /query command."""
-        if not self.client or not self.current_context:
+        if not self.client or not self.current_context or not self.memory_manager:
             self.console.print("[red]Not connected or no context.[/red]")
             return
 
         try:
             with self.console.status("[dim]Querying context...[/dim]"):
-                result = await self.memory_manager.query_with_memory(
-                    query=query_text,
-                    context=self.current_context,
-                    limit=8,
-                )
+                if self.current_context.allows_sources:
+                    result = await self.memory_manager.query_with_memory(
+                        query=query_text,
+                        context=self.current_context,
+                        limit=8,
+                    )
+                else:
+                    # Memory-only mode: query only conversation history
+                    from .models import Principal
+                    result = await self.client.query(
+                        query=query_text,
+                        principal=Principal(
+                            external_id=self.current_context.principal.external_id,
+                            display_name=self.current_context.principal.display_name,
+                            roles=self.current_context.principal.roles,
+                        ),
+                        limit=8,
+                        content_kinds=["conversation_message"],
+                        source_collections=self.current_context.source_collections_for_query,
+                        memory=self.current_context.to_api_format(),
+                    )
 
             if result.items:
                 self.console.print(f"[green]Found {len(result.items)} context items:[/green]")
@@ -292,7 +333,7 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
     async def handle_memory(self) -> None:
         """Handle the /memory command."""
-        if not self.client or not self.current_context:
+        if not self.client or not self.current_context or not self.memory_manager:
             self.console.print("[red]Not connected or no context.[/red]")
             return
 
@@ -322,7 +363,7 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
     async def handle_search(self, query: str) -> None:
         """Handle the /search command."""
-        if not self.client or not self.current_context:
+        if not self.client or not self.current_context or not self.memory_manager:
             self.console.print("[red]Not connected or no context.[/red]")
             return
 
@@ -349,12 +390,12 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
     async def handle_sources(self) -> None:
         """Handle the /sources command."""
-        if not self.client:
+        if not self.client or not self.current_context:
             self.console.print("[red]Not connected.[/red]")
             return
 
         try:
-            sources = await self.client.list_sources()
+            sources = await self.client.list_sources(self.current_context.principal)
             if sources:
                 self.console.print(f"[green]Found {len(sources)} sources:[/green]")
                 table = Table(title="Ingested Sources")
@@ -379,12 +420,15 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
     async def handle_doc(self, short_id: str) -> None:
         """Handle the /doc command."""
-        if not self.client:
+        if not self.client or not self.current_context:
             self.console.print("[red]Not connected.[/red]")
             return
 
+        if not self._require_sources("Document retrieval"):
+            return
+
         try:
-            doc = await self.client.get_document(short_id)
+            doc = await self.client.get_document(short_id, self.current_context.principal)
             if doc:
                 panel = Panel(
                     doc.get("body", "No content"),
@@ -400,7 +444,7 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
     async def handle_ingest(self) -> None:
         """Handle the /ingest command."""
-        if not self.client:
+        if not self.client or not self.current_context:
             self.console.print("[red]Not connected.[/red]")
             return
 
@@ -410,6 +454,15 @@ Any text not starting with `/` is sent as a user message and stored in conversat
         source_type = Prompt.ask("Source object type", default="test-record")
         source_id = Prompt.ask("Source object ID", default="test-001")
         title = Prompt.ask("Title", default=f"Test record {source_id}")
+        collection_external_id = self.current_context.private_source_collection_external_id
+        if collection_external_id is None and self.current_context.source_collection_external_ids:
+            collection_external_id = self.current_context.source_collection_external_ids[0]
+        if collection_external_id is None:
+            raw_collection = Prompt.ask(
+                "Source collection (blank for user-private)",
+                default="",
+            ).strip()
+            collection_external_id = raw_collection or None
 
         self.console.print("Enter content (Ctrl+D or empty line to finish):")
         lines: list[str] = []
@@ -436,6 +489,8 @@ Any text not starting with `/` is sent as a user message and stored in conversat
                     source_object_id=source_id,
                     title=title,
                     metadata={"ingested_by": "testing_bot"},
+                    principal=self.current_context.principal,
+                    collection_external_id=collection_external_id,
                 )
 
             self.console.print(f"[green]Ingested successfully:[/green] {result.status}")
@@ -494,7 +549,7 @@ Any text not starting with `/` is sent as a user message and stored in conversat
                     query=message,
                     context=self.current_context,
                     include_memory=True,
-                    include_sources=True,
+                    include_sources=self.current_context.allows_sources,
                 )
 
             # Display retrieved context

@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+from contextlib import suppress
 from typing import Any
 from uuid import UUID
 
 import httpx
-from httpx import HTTPStatusError, RequestError
+from httpx import HTTPStatusError
 
 from .config import get_settings
 from .errors import (
@@ -82,10 +83,8 @@ class KontextClient:
         """Convert HTTP errors to typed exceptions."""
         status = exc.response.status_code
         body: dict[str, Any] = {}
-        try:
+        with suppress(Exception):
             body = exc.response.json()
-        except Exception:
-            pass
 
         detail = body.get("detail", str(exc))
 
@@ -130,6 +129,7 @@ class KontextClient:
         content_kinds: list[str] | None = None,
         metadata_match: dict[str, Any] | None = None,
         source_scope: list[dict[str, Any]] | None = None,
+        source_collections: list[str] | None = None,
         memory: dict[str, Any] | None = None,
     ) -> QueryResult:
         """Execute a context query against the API."""
@@ -154,6 +154,8 @@ class KontextClient:
             payload["metadata_match"] = metadata_match
         if source_scope:
             payload["source_scope"] = source_scope
+        if source_collections is not None:
+            payload["source_collections"] = source_collections
         if memory:
             payload["memory"] = memory
 
@@ -171,11 +173,17 @@ class KontextClient:
             self._handle_error(exc)
             raise
 
-    async def get_document(self, short_id: str) -> dict[str, Any] | None:
+    async def get_document(self, short_id: str, principal: Principal | None = None) -> dict[str, Any] | None:
         """Retrieve a specific document by short ID."""
         client = self._ensure_client()
+        settings = get_settings()
+        params = {
+            "principal_external_id": (
+                principal.external_id if principal is not None else settings.bot_principal_id
+            )
+        }
         try:
-            response = await client.get(f"/v1/documents/{short_id}")
+            response = await client.get(f"/v1/documents/{short_id}", params=params)
             response.raise_for_status()
             return response.json()
         except HTTPStatusError as exc:
@@ -195,11 +203,18 @@ class KontextClient:
         entities: list[dict[str, Any]] | None = None,
         source_version: str | None = None,
         source_url: str | None = None,
+        principal: Principal | None = None,
+        collection_external_id: str | None = None,
     ) -> IngestResult:
         """Ingest a source record into the API."""
         client = self._ensure_client()
+        settings = get_settings()
 
         payload: dict[str, Any] = {
+            "principal": {
+                "external_id": (principal.external_id if principal else settings.bot_principal_id),
+                "display_name": (principal.display_name if principal else settings.bot_display_name),
+            },
             "source_system": source_system,
             "source_object_type": source_object_type,
             "source_object_id": source_object_id,
@@ -216,6 +231,8 @@ class KontextClient:
             payload["source_version"] = source_version
         if source_url:
             payload["source_url"] = source_url
+        if collection_external_id:
+            payload["collection_external_id"] = collection_external_id
 
         try:
             response = await client.post("/v1/ingest/records", json=payload)
@@ -339,11 +356,17 @@ class KontextClient:
             self._handle_error(exc)
             raise
 
-    async def list_sources(self) -> list[dict[str, Any]]:
+    async def list_sources(self, principal: Principal | None = None) -> list[dict[str, Any]]:
         """List all ingested sources."""
         client = self._ensure_client()
+        settings = get_settings()
+        params = {
+            "principal_external_id": (
+                principal.external_id if principal is not None else settings.bot_principal_id
+            )
+        }
         try:
-            response = await client.get("/v1/sources")
+            response = await client.get("/v1/sources", params=params)
             response.raise_for_status()
             data = response.json()
             return data.get("sources", [])

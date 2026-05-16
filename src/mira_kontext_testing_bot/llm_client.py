@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 import httpx
 
 from .config import get_settings
@@ -251,7 +249,9 @@ class MockLLMClient:
                 lines.append(f"- I found {source_count} relevant source(s) in the knowledge base")
 
             # Extract memory info
-            memory_lines = [l for l in context.split("\n") if "Conversation History" in l]
+            memory_lines = [
+                line for line in context.split("\n") if "Conversation History" in line
+            ]
             if memory_lines:
                 lines.append("- I have access to our conversation history")
 

@@ -4,7 +4,6 @@ import pytest
 from pydantic import ValidationError
 
 from mira_kontext_testing_bot.models import (
-    ContextItem,
     Message,
     Principal,
     Project,

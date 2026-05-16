@@ -72,7 +72,7 @@ class ContextItem(BaseModel):
     snippet: str
     score: float
     metadata: dict[str, Any] = Field(default_factory=dict)
-    citations: list[dict[str, Any]] = Field(default_factory=list)
+    citations: list[dict[str, Any]] = Field(default_factory=lambda: [])
 
 
 class QueryResult(BaseModel):
@@ -94,7 +94,7 @@ class IngestResult(BaseModel):
     source_record_id: UUID
     checksum: str
     status: Literal["created", "updated", "unchanged"]
-    entity_ids: list[UUID] = Field(default_factory=list)
+    entity_ids: list[UUID] = Field(default_factory=lambda: [])
 
 
 class MemoryMessage(BaseModel):

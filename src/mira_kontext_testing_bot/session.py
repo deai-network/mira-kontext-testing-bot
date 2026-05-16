@@ -5,10 +5,12 @@ from __future__ import annotations
 import time
 import uuid
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Literal
 
 from .config import get_settings
 from .models import Message, Principal, Project, Session
+
+IsolationMode = Literal["full", "memory_only"]
 
 
 @dataclass
@@ -18,8 +20,16 @@ class ChatContext:
     project: Project
     session: Session
     principal: Principal
-    messages: list[Message] = field(default_factory=list)
-    metadata: dict[str, Any] = field(default_factory=dict)
+    messages: list[Message] = field(default_factory=lambda: [])
+    metadata: dict[str, Any] = field(default_factory=lambda: {})
+    mode: IsolationMode = "full"
+    source_collection_external_ids: list[str] | None = None
+    private_source_collection_external_id: str | None = None
+
+    @property
+    def allows_sources(self) -> bool:
+        """Whether this context may query source records through API policy."""
+        return self.source_collection_external_ids is None or bool(self.source_collection_external_ids)
 
     def add_message(self, role: str, content: str, metadata: dict[str, Any] | None = None) -> None:
         """Add a message to the conversation history."""
@@ -42,6 +52,11 @@ class ChatContext:
             "session_external_id": self.session.external_id,
             "principal_external_id": self.principal.external_id,
         }
+
+    @property
+    def source_collections_for_query(self) -> list[str] | None:
+        """Collection scope to pass to query endpoints."""
+        return self.source_collection_external_ids
 
 
 class SessionManager:
@@ -142,6 +157,10 @@ class SessionManager:
         project: Project,
         session: Session,
         principal: Principal | None = None,
+        *,
+        mode: IsolationMode = "full",
+        source_collection_external_ids: list[str] | None = None,
+        private_source_collection_external_id: str | None = None,
     ) -> ChatContext:
         """Create a new chat context."""
         if principal is None:
@@ -157,6 +176,9 @@ class SessionManager:
             project=project,
             session=session,
             principal=principal,
+            mode=mode,
+            source_collection_external_ids=source_collection_external_ids,
+            private_source_collection_external_id=private_source_collection_external_id,
         )
 
         # Store in active sessions
@@ -176,7 +198,23 @@ class SessionManager:
             title=session_title or f"Blank session for {principal.external_id}",
             metadata={"blank_memory": True},
         )
-        return self.create_context(project=project, session=session, principal=principal)
+        private_collection_id = self.private_collection_external_id(principal)
+        return self.create_context(
+            project=project,
+            session=session,
+            principal=principal,
+            mode="memory_only",
+            source_collection_external_ids=[private_collection_id],
+            private_source_collection_external_id=private_collection_id,
+        )
+
+    def private_collection_external_id(self, principal: Principal) -> str:
+        """Match the API's deterministic private collection id for a principal."""
+        normalized = "".join(
+            character.lower() if character.isalnum() or character in {"_", "-"} else "-"
+            for character in principal.external_id
+        ).strip("-")
+        return f"user-{normalized or 'principal'}-private"
 
     def get_context(self, session_id: str) -> ChatContext | None:
         """Retrieve an active chat context by session ID."""
