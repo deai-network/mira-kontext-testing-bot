@@ -18,6 +18,7 @@ from .llm_client import LLMClient, MockLLMClient, OllamaCloudClient
 from .memory_manager import MemoryManager
 from .models import Session
 from .session import ChatContext, get_session_manager
+from .web_fetcher import WebFetcher, WebFetchError
 
 
 class ChatInterface:
@@ -31,6 +32,7 @@ class ChatInterface:
         self.memory_manager: MemoryManager | None = None
         self.current_context: ChatContext | None = None
         self.llm: Any | None = None
+        self.web_fetcher: WebFetcher | None = None
 
     def print_banner(self) -> None:
         """Print the welcome banner."""
@@ -67,6 +69,8 @@ class ChatInterface:
 - **/ingest** - Start interactive content ingestion
 - **/sources** - List ingested sources
 - **/doc <short_id>** - Retrieve a document by short ID
+- **/crawl <url>** - Fetch and ingest a web page into your private collection
+- **/search-web <query>** - Search the web, fetch top results, and ingest them
 
 ### Testing
 - **/test <suite>** - Run test scenarios (health, memory, query, ingest, full)
@@ -94,6 +98,13 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
             self.memory_manager = MemoryManager(self.client)
             self.current_context = self.session_manager.get_or_create_default_context()
+
+            # Initialize web fetcher if configured
+            self.web_fetcher = WebFetcher()
+            if self.web_fetcher.is_configured():
+                self.console.print("[green]Web fetcher ready:[/green] Firecrawl configured")
+            else:
+                self.console.print("[dim]Web fetcher disabled:[/dim] Set FIRECRAWL_API_KEY to enable")
 
             # Initialize LLM client based on provider
             if self.settings.llm_api_key:
@@ -306,7 +317,6 @@ Any text not starting with `/` is sent as a user message and stored in conversat
                         ),
                         limit=8,
                         content_kinds=["conversation_message"],
-                        source_collections=self.current_context.source_collections_for_query,
                         memory=self.current_context.to_api_format(),
                     )
 
@@ -525,6 +535,82 @@ Any text not starting with `/` is sent as a user message and stored in conversat
         except Exception as exc:
             self.console.print(f"[red]Status check failed:[/red] {exc}")
 
+    async def handle_crawl(self, url: str) -> None:
+        """Handle the /crawl command: fetch and ingest a web page."""
+        if not self.client or not self.current_context:
+            self.console.print("[red]Not connected.[/red]")
+            return
+
+        if not self.web_fetcher:
+            self.console.print("[red]Web fetcher not initialized.[/red]")
+            return
+
+        if not self.web_fetcher.is_configured():
+            self.console.print("[red]Web fetcher not configured. Set FIRECRAWL_API_KEY in .env[/red]")
+            return
+
+        try:
+            with self.console.status(f"[dim]Fetching {url}...[/dim]"):
+                result = await self.web_fetcher.fetch_url(
+                    url=url,
+                    client=self.client,
+                    context=self.current_context,
+                )
+
+            self.console.print(f"[green]Fetched and ingested:[/green] {result['title']}")
+            self.console.print(f"[dim]URL:[/dim] {result['url']}")
+            self.console.print(f"[dim]Content length:[/dim] {result['content_length']} chars")
+            self.console.print(f"[dim]Ingest status:[/dim] {result['ingest_status']}")
+            self.console.print(f"[dim]Content item ID:[/dim] {result['content_item_id']}")
+
+        except WebFetchError as exc:
+            self.console.print(f"[red]Crawl failed:[/red] {exc}")
+
+    async def handle_search_web(self, query: str) -> None:
+        """Handle the /search-web command: search and ingest top results."""
+        if not self.client or not self.current_context:
+            self.console.print("[red]Not connected.[/red]")
+            return
+
+        if not self.web_fetcher:
+            self.console.print("[red]Web fetcher not initialized.[/red]")
+            return
+
+        if not self.web_fetcher.is_configured():
+            self.console.print("[red]Web fetcher not configured. Set FIRECRAWL_API_KEY in .env[/red]")
+            return
+
+        try:
+            with self.console.status(f"[dim]Searching web for '{query}'...[/dim]"):
+                results = await self.web_fetcher.search_and_ingest(
+                    query=query,
+                    client=self.client,
+                    context=self.current_context,
+                    max_results=3,
+                )
+
+            if not results:
+                self.console.print("[dim]No web results found.[/dim]")
+                return
+
+            succeeded = [r for r in results if "error" not in r]
+            failed = [r for r in results if "error" in r]
+
+            self.console.print(f"[green]Ingested {len(succeeded)} page(s) from web search.[/green]")
+
+            for r in succeeded:
+                self.console.print(f"\n  [cyan]{r['title']}[/cyan]")
+                self.console.print(f"  URL: {r['url']}")
+                self.console.print(f"  Status: {r['ingest_status']} | Length: {r['content_length']} chars")
+
+            if failed:
+                self.console.print(f"\n[yellow]{len(failed)} page(s) failed:[/yellow]")
+                for r in failed:
+                    self.console.print(f"  [red]- {r['url']}:[/red] {r['error']}")
+
+        except WebFetchError as exc:
+            self.console.print(f"[red]Web search failed:[/red] {exc}")
+
     async def handle_chat_message(self, message: str) -> None:
         """Handle a regular chat message (not a command)."""
         if not self.client or not self.current_context or not self.memory_manager:
@@ -556,6 +642,53 @@ Any text not starting with `/` is sent as a user message and stored in conversat
             if context_pack["source_items"] or context_pack["memory_items"]:
                 context_display = self.memory_manager.format_context_for_display(context_pack)
                 self.console.print(Panel(context_display, title="Context", border_style="dim"))
+
+            # Auto-propose web search if no local sources found and enabled
+            if (
+                not context_pack.get("source_items")
+                and self.settings.auto_web_search
+                and self.web_fetcher
+                and self.web_fetcher.is_configured()
+                and self.current_context.allows_sources
+            ):
+                self.console.print(
+                    "\n[yellow]No relevant sources found in the knowledge base.[/yellow]"
+                )
+                confirm = Prompt.ask(
+                    "Search the web for this topic? (yes/no)",
+                    default="no",
+                )
+                if confirm.lower() in ("yes", "y"):
+                    with self.console.status(f"[dim]Searching web for '{message}'...[/dim]"):
+                        web_results = await self.web_fetcher.search_and_ingest(
+                            query=message,
+                            client=self.client,
+                            context=self.current_context,
+                            max_results=3,
+                        )
+
+                    succeeded = [r for r in web_results if "error" not in r]
+                    if succeeded:
+                        self.console.print(
+                            f"[green]Ingested {len(succeeded)} page(s) from web. Re-querying...[/green]"
+                        )
+                        # Re-query after ingestion
+                        with self.console.status("[dim]Re-querying with new sources...[/dim]"):
+                            context_pack = await self.memory_manager.build_context_pack(
+                                query=message,
+                                context=self.current_context,
+                                include_memory=True,
+                                include_sources=True,
+                            )
+                        if context_pack["source_items"]:
+                            context_display = self.memory_manager.format_context_for_display(
+                                context_pack
+                            )
+                            self.console.print(
+                                Panel(context_display, title="Context", border_style="dim")
+                            )
+                    else:
+                        self.console.print("[dim]No web results found to ingest.[/dim]")
 
             # Generate response using LLM
             with self.console.status("[dim]Generating response...[/dim]"):
@@ -714,6 +847,16 @@ Any text not starting with `/` is sent as a user message and stored in conversat
                     self.console.print("[red]Usage: /doc <short_id>[/red]")
             case "ingest" | "i":
                 await self.handle_ingest()
+            case "crawl":
+                if args:
+                    await self.handle_crawl(args)
+                else:
+                    self.console.print("[red]Usage: /crawl <url>[/red]")
+            case "search-web" | "sw":
+                if args:
+                    await self.handle_search_web(args)
+                else:
+                    self.console.print("[red]Usage: /search-web <query>[/red]")
             case "status":
                 await self.handle_status()
             case "test" | "t":

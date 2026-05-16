@@ -85,6 +85,8 @@ Available commands in chat mode:
 | `/sources` | List ingested sources |
 | `/doc <short_id>` | Retrieve a document |
 | `/ingest` | Interactive content ingestion |
+| `/crawl <url>` | Fetch and ingest a web page (requires FIRECRAWL_API_KEY) |
+| `/search-web <query>` | Search the web and ingest top results |
 | `/test <suite>` | Run test scenarios |
 | `/status` | Check API status |
 | `/help` | Show help |
@@ -114,6 +116,18 @@ poetry run kontext-bot test audit
 poetry run kontext-bot query "What is Project Atlas?" --limit 5
 ```
 
+#### Fetch and Ingest a Web Page
+
+```bash
+poetry run kontext-bot crawl https://example.com/article
+```
+
+#### Search the Web and Ingest Results
+
+```bash
+poetry run kontext-bot search-web "Project Atlas documentation" --max-results 3
+```
+
 #### Check API Status
 
 ```bash
@@ -125,6 +139,44 @@ poetry run kontext-bot status
 ```bash
 poetry run kontext-bot config
 ```
+
+## Web Fetching
+
+The bot can crawl the web and ingest pages directly into the Kontext API as source records. This is useful when the knowledge base does not contain relevant information and you want to pull in up-to-date content from the internet.
+
+### Features
+
+- **Manual Crawl**: Fetch a specific URL via Firecrawl and ingest it into your private collection (`/crawl`).
+- **Web Search**: Search DuckDuckGo, fetch top results, and ingest them automatically (`/search-web`).
+- **Auto-Propose**: When `AUTO_WEB_SEARCH=true` and a chat query returns no local sources, the bot asks if you want to search the web, then re-queries after ingestion.
+
+### Configuration
+
+Add to your `.env` file:
+
+```bash
+# Firecrawl API key (get one at https://firecrawl.dev)
+FIRECRAWL_API_KEY=fc-xxxxxxxxxxxxxxxxxxxxxxxx
+
+# Whether to propose web search when local sources are empty
+AUTO_WEB_SEARCH=true
+```
+
+### Interactive Chat Commands
+
+| Command | Description |
+|---------|-------------|
+| `/crawl <url>` | Fetch a web page and ingest it into your private collection |
+| `/search-web <query>` | Search the web, fetch top results, and ingest them |
+
+### CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `kontext-bot crawl <url>` | Fetch and ingest a single page |
+| `kontext-bot search-web <query> --max-results 3` | Search and ingest web results |
+
+---
 
 ## API Endpoints Tested
 

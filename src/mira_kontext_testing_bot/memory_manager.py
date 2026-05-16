@@ -78,7 +78,9 @@ class MemoryManager:
             principal=context.principal,
             limit=limit,
             content_kinds=kinds,
-            source_collections=context.source_collections_for_query,
+            source_collections=(
+                context.source_collections_for_query if context.allows_sources else None
+            ),
             memory=context.to_api_format(),
         )
 

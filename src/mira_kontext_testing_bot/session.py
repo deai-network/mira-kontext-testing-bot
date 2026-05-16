@@ -29,7 +29,7 @@ class ChatContext:
     @property
     def allows_sources(self) -> bool:
         """Whether this context may query source records through API policy."""
-        return self.source_collection_external_ids is None or bool(self.source_collection_external_ids)
+        return self.mode == "full"
 
     def add_message(self, role: str, content: str, metadata: dict[str, Any] | None = None) -> None:
         """Add a message to the conversation history."""

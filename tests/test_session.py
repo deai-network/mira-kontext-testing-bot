@@ -101,7 +101,7 @@ class TestSessionManager:
         assert blank_context.mode == "memory_only"
         assert blank_context.private_source_collection_external_id == "user-blank-user-private"
         assert blank_context.source_collections_for_query == ["user-blank-user-private"]
-        assert blank_context.allows_sources is True
+        assert blank_context.allows_sources is False
         assert blank_context.messages == []
         assert manager.get_conversation_history(blank_context.session.external_id) == []
 

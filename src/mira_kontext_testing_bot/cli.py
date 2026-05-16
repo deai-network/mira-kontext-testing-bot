@@ -190,6 +190,134 @@ def query(
 
 
 @cli.command()
+@click.argument("url")
+@click.option("--api-url", help="Override API URL")
+@click.option("--token", help="Override API token")
+@click.pass_context
+def crawl(
+    ctx: click.Context,
+    url: str,
+    api_url: str | None,
+    token: str | None,
+) -> None:
+    """Fetch a web page via Firecrawl and ingest it into the API."""
+    settings = get_settings()
+    effective_url = api_url or ctx.obj.get("api_url") or settings.kontext_api_url
+    effective_token = token or ctx.obj.get("token") or settings.kontext_token
+
+    if not effective_token:
+        console.print("[red]Error: API token required.[/red]")
+        sys.exit(1)
+
+    if not settings.firecrawl_api_key:
+        console.print("[red]Error: FIRECRAWL_API_KEY not configured.[/red]")
+        sys.exit(1)
+
+    async def execute() -> None:
+        from .session import get_session_manager
+        from .web_fetcher import WebFetcher, WebFetchError
+
+        client = KontextClient(base_url=effective_url, token=effective_token)
+        await client.connect()
+        fetcher = WebFetcher()
+        session_mgr = get_session_manager()
+        context = session_mgr.get_or_create_default_context()
+
+        try:
+            with console.status(f"[dim]Fetching {url}...[/dim]"):
+                result = await fetcher.fetch_url(
+                    url=url,
+                    client=client,
+                    context=context,
+                )
+            console.print(f"[green]Fetched and ingested:[/green] {result['title']}")
+            console.print(f"[dim]URL:[/dim] {result['url']}")
+            console.print(f"[dim]Content length:[/dim] {result['content_length']} chars")
+            console.print(f"[dim]Ingest status:[/dim] {result['ingest_status']}")
+            console.print(f"[dim]Content item ID:[/dim] {result['content_item_id']}")
+        except WebFetchError as exc:
+            console.print(f"[red]Crawl failed:[/red] {exc}")
+            sys.exit(1)
+        finally:
+            await client.close()
+
+    asyncio.run(execute())
+
+
+@cli.command("search-web")
+@click.argument("query")
+@click.option("--max-results", default=3, help="Maximum web results to fetch")
+@click.option("--api-url", help="Override API URL")
+@click.option("--token", help="Override API token")
+@click.pass_context
+def search_web(
+    ctx: click.Context,
+    query: str,
+    max_results: int,
+    api_url: str | None,
+    token: str | None,
+) -> None:
+    """Search the web via DuckDuckGo, fetch top results, and ingest into API."""
+    settings = get_settings()
+    effective_url = api_url or ctx.obj.get("api_url") or settings.kontext_api_url
+    effective_token = token or ctx.obj.get("token") or settings.kontext_token
+
+    if not effective_token:
+        console.print("[red]Error: API token required.[/red]")
+        sys.exit(1)
+
+    if not settings.firecrawl_api_key:
+        console.print("[red]Error: FIRECRAWL_API_KEY not configured.[/red]")
+        sys.exit(1)
+
+    async def execute() -> None:
+        from .session import get_session_manager
+        from .web_fetcher import WebFetcher, WebFetchError
+
+        client = KontextClient(base_url=effective_url, token=effective_token)
+        await client.connect()
+        fetcher = WebFetcher()
+        session_mgr = get_session_manager()
+        context = session_mgr.get_or_create_default_context()
+
+        try:
+            with console.status(f"[dim]Searching web for '{query}'...[/dim]"):
+                results = await fetcher.search_and_ingest(
+                    query=query,
+                    client=client,
+                    context=context,
+                    max_results=max_results,
+                )
+
+            if not results:
+                console.print("[dim]No web results found.[/dim]")
+                return
+
+            succeeded = [r for r in results if "error" not in r]
+            failed = [r for r in results if "error" in r]
+
+            console.print(f"[green]Ingested {len(succeeded)} page(s) from web search.[/green]")
+
+            for r in succeeded:
+                console.print(f"\n  [cyan]{r['title']}[/cyan]")
+                console.print(f"  URL: {r['url']}")
+                console.print(f"  Status: {r['ingest_status']} | Length: {r['content_length']} chars")
+
+            if failed:
+                console.print(f"\n[yellow]{len(failed)} page(s) failed:[/yellow]")
+                for r in failed:
+                    console.print(f"  [red]- {r['url']}:[/red] {r['error']}")
+
+        except WebFetchError as exc:
+            console.print(f"[red]Web search failed:[/red] {exc}")
+            sys.exit(1)
+        finally:
+            await client.close()
+
+    asyncio.run(execute())
+
+
+@cli.command()
 def config() -> None:
     """Display current configuration."""
     settings = get_settings()
@@ -205,6 +333,11 @@ def config() -> None:
     # Token is masked for security
     token_status = "Set" if settings.kontext_token else "Not set"
     console.print(f"Token:      {token_status}")
+
+    # Web fetcher status
+    firecrawl_status = "Set" if settings.firecrawl_api_key else "Not set"
+    console.print(f"Firecrawl:  {firecrawl_status} (crawl/search-web)")
+    console.print(f"Auto Web:   {settings.auto_web_search}")
 
 
 # Entry point for the package

@@ -43,6 +43,10 @@ class Settings(BaseSettings):
     llm_timeout: float = Field(default=30.0)
     llm_provider: str = Field(default="openai")  # openai, ollama, openrouter
 
+    # Web Fetching Configuration
+    firecrawl_api_key: str | None = Field(default=None)
+    auto_web_search: bool = Field(default=True)  # Propose web search when no local results found
+
 
 @lru_cache
 def get_settings() -> Settings:

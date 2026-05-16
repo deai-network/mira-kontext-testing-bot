@@ -18,6 +18,8 @@ rich = "^13.0.0"
 pytest = "^8.3.0"
 pytest-asyncio = "^0.25.0"
 anyio = "^4.0.0"
+firecrawl-py = "^1.15.0"
+duckduckgo-search = "^7.0.0"
 repl-toolkit = { path = "../repl-toolkit", develop = true }
 
 [tool.poetry.group.dev.dependencies]
