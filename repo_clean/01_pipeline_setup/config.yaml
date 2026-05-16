@@ -1,0 +1,58 @@
+client:
+  name: "Platzer Kommunikation"
+  base_url: "https://plakomm.de"
+  industry: "agency"
+  language: "de"
+
+scraping:
+  max_pages: 50
+  probe_pages: 5
+  exclude_patterns:
+    - "/cart"
+    - "/checkout"
+    - "/login"
+    - "/password"
+    - "/wp-admin"
+    - "/feed"
+  exclude_page_types:
+    - "/datenschutzerklaerung"
+    - "/datenschutz"
+    - "/privacy"
+  cookie_handling:
+    # Firecrawl actions: wait for page, then dismiss cookie banner
+    wait_before_ms: 3000
+    click_selectors:
+      - "a._brlbs-btn-accept-all"
+      - "a[data-cookie-accept]"
+      - "#CookieBoxSaveButton"
+      - "button.accept-all-cookies"
+      - "[data-testid='uc-accept-all-button']"
+      - ".cc-accept"
+    wait_after_ms: 1500
+
+cleaning:
+  # CSS selectors to strip from HTML before extracting text
+  strip_selectors:
+    - "nav"
+    - "footer"
+    - "header"
+    - "#BorlabsCookieBox"
+    - ".cookie-banner"
+    - ".consent-overlay"
+    - "[data-nosnippet]"
+  # Regex patterns to remove from extracted text
+  strip_text_patterns:
+    - "^Zum Hauptinhalt springen$"
+    - "^Home\\s+Leistungen\\s+Projekte.*$"
+    - "^Cookie-Einstellungen.*$"
+    - "^Diese Website verwendet Cookies.*$"
+
+processing:
+  chunk_size: 800
+  chunk_overlap: 100
+  embedding_model: "text-embedding-3-small"
+  embedding_dimensions: 1536
+
+database:
+  table_name: "knowledge_base_v3"
+  provider: "supabase"

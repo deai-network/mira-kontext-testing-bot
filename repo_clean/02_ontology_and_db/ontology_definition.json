@@ -1,0 +1,45 @@
+{
+  "client_name": "GenericClient",
+  "business_domains": [
+    "company_overview",
+    "products_services",
+    "customer_service",
+    "health_wellness",
+    "general_business"
+  ],
+  "content_types": [
+    "web_content",
+    "faq",
+    "product_sheet",
+    "blog_post",
+    "policy"
+  ],
+  "chunk_types": [
+    "general",
+    "identity",
+    "medical",
+    "composition",
+    "faq",
+    "variant"
+  ],
+  "extraction_rules": {
+    "product_sheets": {
+      "sections_to_extract": [
+        "Zutaten",
+        "Zusammensetzung",
+        "Hinweise",
+        "Anwendung",
+        "Verzehrempfehlung",
+        "Inhalt",
+        "Firma",
+        "Stand"
+      ]
+    },
+    "faq": {
+      "question_patterns": [
+        "\\?$",
+        "^(?:Frage|Question|Q):"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Generic RAG Workflow Template",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "/**\n * GENERIC CHUNKER & FORMATTER\n * Smart dispatching for Web, FAQ, and Product Sheets\n */\n\nfunction fnv1a64Hex(input) {\n  let hash = 0xcbf29ce484222325n;\n  const prime = 0x100000001b3n;\n  const s = String(input ?? '');\n  for (let i = 0; i < s.length; i++) {\n    hash ^= BigInt(s.charCodeAt(i));\n    hash = (hash * prime) & 0xffffffffffffffffn;\n  }\n  return hash.toString(16).padStart(16, '0');\n}\n\n// Generic chunking logic here...\nreturn $input.all();"
+      },
+      "name": "Chunk File Inputs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [ 1280, -320 ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Stoplist of URLs to filter out (Client Specific)\nconst STOPLIST = [\n  'https://www.clientwebsite.com/cart',\n  'https://www.clientwebsite.com/checkout',\n  'https://www.clientwebsite.com/login'\n];\n\nconst stoplistSet = new Set(STOPLIST);\nconst links = $json.links || [];\n\nconst filteredLinks = links.filter(item => !stoplistSet.has(item.url)).map(item => ({ json: { link: item.url } }));\nreturn filteredLinks;"
+      },
+      "name": "Prepare Links",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [ 1072, 304 ]
+    }
+  ],
+  "connections": {}
+}
