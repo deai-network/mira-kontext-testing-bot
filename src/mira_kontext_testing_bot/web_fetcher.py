@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Any
+import warnings
+from importlib import import_module
+from typing import Any, cast
 
 from .client import KontextClient
 from .config import get_settings
@@ -35,32 +37,52 @@ class WebFetcher:
             )
 
         try:
-            from firecrawl import FirecrawlApp
+            with warnings.catch_warnings():
+                warnings.filterwarnings(
+                    "ignore",
+                    message='Field name "json" in "ChangeTrackingData" shadows an attribute',
+                    category=UserWarning,
+                )
+                firecrawl_module = import_module("firecrawl")
+            firecrawl_app = firecrawl_module.FirecrawlApp
         except ImportError as exc:
             raise WebFetchError(
                 "firecrawl-py is not installed. Run: poetry install"
             ) from exc
 
-        self._firecrawl_app = FirecrawlApp(api_key=api_key)
+        self._firecrawl_app = firecrawl_app(api_key=api_key)
         return self._firecrawl_app
 
-    def _search_duckduckgo(self, query: str, max_results: int = 5) -> list[dict[str, str]]:
-        """Search DuckDuckGo and return top result URLs."""
+    def _search_firecrawl(self, query: str, max_results: int = 5) -> list[dict[str, str]]:
+        """Search via Firecrawl and return normalized result URLs."""
+        app = self._get_firecrawl()
         try:
-            from duckduckgo_search import DDGS
-        except ImportError as exc:
-            raise WebFetchError(
-                "duckduckgo-search is not installed. Run: poetry install"
-            ) from exc
+            raw_response: object = app.search(query, params={"limit": max_results})
+        except Exception as exc:
+            raise WebFetchError(f"Firecrawl search failed for '{query}': {exc}") from exc
+
+        raw_results: object
+        if isinstance(raw_response, dict):
+            response = cast(dict[str, object], raw_response)
+            raw_results = response.get("data")
+        else:
+            raw_results = raw_response
+        if not isinstance(raw_results, list):
+            return []
 
         results: list[dict[str, str]] = []
-        with DDGS() as ddgs:
-            for result in ddgs.text(query, max_results=max_results):
-                results.append({
-                    "title": result.get("title", ""),
-                    "url": result.get("href", ""),
-                    "snippet": result.get("body", ""),
-                })
+        for raw_result in cast(list[object], raw_results)[:max_results]:
+            if not isinstance(raw_result, dict):
+                continue
+            result = cast(dict[str, object], raw_result)
+            url = str(result.get("url") or result.get("href") or "")
+            if not url:
+                continue
+            results.append({
+                "title": str(result.get("title", "")),
+                "url": url,
+                "snippet": str(result.get("description") or result.get("snippet") or ""),
+            })
         return results
 
     async def fetch_url(
@@ -73,7 +95,7 @@ class WebFetcher:
         app = self._get_firecrawl()
 
         try:
-            result = app.scrape_url(
+            raw_result = app.scrape_url(
                 url,
                 params={
                     "formats": ["markdown", "html"],
@@ -83,26 +105,21 @@ class WebFetcher:
         except Exception as exc:
             raise WebFetchError(f"Failed to scrape {url}: {exc}") from exc
 
-        data = result.get("data", result) if isinstance(result, dict) else result
+        result = cast(dict[str, object], raw_result) if isinstance(raw_result, dict) else {}
+        data = result.get("data", result)
         if not isinstance(data, dict):
             data = {"markdown": str(data)}
+        page_data = cast(dict[str, object], data)
 
-        markdown = data.get("markdown", "")
-        html = data.get("html", "")
-        meta = data.get("metadata", {})
-        title = meta.get("title", url)
+        markdown = str(page_data.get("markdown", ""))
+        html = str(page_data.get("html", ""))
+        raw_meta = page_data.get("metadata", {})
+        meta = cast(dict[str, object], raw_meta) if isinstance(raw_meta, dict) else {}
+        title = str(meta.get("title", url))
 
         content = markdown or html or ""
         if not content.strip():
             raise WebFetchError(f"No content extracted from {url}")
-
-        # Use the user's private collection for ingested web content
-        collection_id = context.private_source_collection_external_id
-        if collection_id is None:
-            from .session import get_session_manager
-            collection_id = get_session_manager().private_collection_external_id(
-                context.principal
-            )
 
         # Ingest into API
         ingest_result = await client.ingest_record(
@@ -115,11 +132,11 @@ class WebFetcher:
                 "fetched_url": url,
                 "fetched_by": "testing_bot",
                 "title": title,
-                "description": meta.get("description", ""),
+                "description": str(meta.get("description", "")),
             },
             source_url=url,
             principal=context.principal,
-            collection_external_id=collection_id,
+            collection_external_id=None,
         )
 
         return {
@@ -139,7 +156,7 @@ class WebFetcher:
         max_results: int = 3,
     ) -> list[dict[str, Any]]:
         """Search the web for a query, fetch top results, and ingest them."""
-        search_results = self._search_duckduckgo(query, max_results=max_results)
+        search_results = self._search_firecrawl(query, max_results=max_results)
         if not search_results:
             return []
 

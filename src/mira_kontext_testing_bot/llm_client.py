@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import httpx
+from openai import AsyncOpenAI
+from openai.types.chat import ChatCompletionMessageParam
 
 from .config import get_settings
 from .errors import BotError
@@ -23,11 +27,54 @@ class LLMClient:
         base_url: str | None = None,
         model: str | None = None,
     ) -> None:
+        import json
+        import logging
         settings = get_settings()
-        self.api_key = api_key or settings.llm_api_key
+        self.api_key = api_key or settings.llm_api_key or settings.nebius_api_key
         self.base_url = (base_url or settings.llm_base_url).rstrip("/")
         self.model = model or settings.llm_model
         self.timeout = settings.llm_timeout
+
+        logger = logging.getLogger("mira_testing_bot.api")
+        logger.setLevel(logging.DEBUG)
+        if not logger.handlers:
+            fh = logging.FileHandler("bot_api_requests.log")
+            fh.setLevel(logging.DEBUG)
+            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+            fh.setFormatter(formatter)
+            logger.addHandler(fh)
+
+        async def log_request(request: httpx.Request) -> None:
+            await request.aread()
+            body = request.content.decode('utf-8', errors='replace')
+            try:
+                if body:
+                    body = json.dumps(json.loads(body), indent=2)
+            except Exception:
+                pass
+            logger.debug(f"--> Request: {request.method} {request.url}\nHeaders: {dict(request.headers)}\nPayload:\n{body}")
+
+        async def log_response(response: httpx.Response) -> None:
+            await response.aread()
+            body = response.text
+            try:
+                if body:
+                    body = json.dumps(json.loads(body), indent=2)
+            except Exception:
+                pass
+            logger.debug(f"<-- Response: {response.request.method} {response.request.url} - Status {response.status_code}\nPayload:\n{body}\n{'-'*80}")
+
+        http_client = httpx.AsyncClient(
+            timeout=self.timeout,
+            event_hooks={'request': [log_request], 'response': [log_response]}
+        )
+
+        self._client = AsyncOpenAI(
+            api_key=self.api_key,
+            base_url=self.base_url,
+            timeout=self.timeout,
+            http_client=http_client
+        )
 
     async def generate_response(
         self,
@@ -41,59 +88,63 @@ class LLMClient:
             raise LLMError("LLM API key not configured. Set LLM_API_KEY in .env")
 
         # Build messages
-        messages: list[dict[str, str]] = []
+        messages: list[ChatCompletionMessageParam] = []
 
         # System prompt
-        default_system = (
-            "You are a helpful assistant with access to a knowledge base. "
-            "Use the provided context to answer the user's question. "
-            "If the context doesn't contain relevant information, say so. "
-            "Be concise but informative."
+        default_system = _default_system_prompt()
+        messages.append(
+            cast(
+                ChatCompletionMessageParam,
+                {"role": "system", "content": system_prompt or default_system},
+            )
         )
-        messages.append({"role": "system", "content": system_prompt or default_system})
 
         # Add context as a system message
         if context:
-            messages.append({
-                "role": "system",
-                "content": f"Retrieved context:\n{context}",
-            })
+            messages.append(
+                cast(
+                    ChatCompletionMessageParam,
+                    {
+                        "role": "system",
+                        "content": f"Retrieved context:\n{context}",
+                    },
+                )
+            )
 
         # Add conversation history (last 10 messages)
         for msg in conversation_history[-10:]:
-            messages.append(msg)
+            messages.append(
+                cast(
+                    ChatCompletionMessageParam,
+                    {"role": msg["role"], "content": msg["content"]},
+                )
+            )
 
         # Add current user message
-        messages.append({"role": "user", "content": user_message})
+        messages.append(
+            cast(
+                ChatCompletionMessageParam,
+                {
+                    "role": "user",
+                    "content": [{"type": "text", "text": user_message}],
+                },
+            )
+        )
 
         # Make request
-        async with httpx.AsyncClient(timeout=self.timeout) as client:
-            try:
-                response = await client.post(
-                    f"{self.base_url}/chat/completions",
-                    headers={
-                        "Authorization": f"Bearer {self.api_key}",
-                        "Content-Type": "application/json",
-                    },
-                    json={
-                        "model": self.model,
-                        "messages": messages,
-                        "temperature": 0.7,
-                        "max_tokens": 1000,
-                    },
-                )
-                response.raise_for_status()
-                data = response.json()
-
-                if "choices" in data and len(data["choices"]) > 0:
-                    return str(data["choices"][0]["message"]["content"])
-                else:
-                    raise LLMError(f"Unexpected response format: {data}")
-
-            except httpx.HTTPStatusError as exc:
-                raise LLMError(f"LLM API error: {exc.response.status_code}") from exc
-            except Exception as exc:
-                raise LLMError(f"Failed to generate response: {exc}") from exc
+        try:
+            response = await self._client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                temperature=0.7,
+                max_tokens=1000,
+            )
+            content = response.choices[0].message.content if response.choices else None
+            if content is None:
+                raise LLMError("LLM response did not contain content.")
+            return str(content)
+        except Exception as exc:
+            raise LLMError(f"Failed to generate response: {exc}") from exc
 
     def generate_simple_response(
         self,
@@ -161,12 +212,7 @@ class OllamaCloudClient:
         messages: list[dict[str, str]] = []
 
         # System prompt
-        default_system = (
-            "You are a helpful assistant with access to a knowledge base. "
-            "Use the provided context to answer the user's question. "
-            "If the context doesn't contain relevant information, say so. "
-            "Be concise but informative."
-        )
+        default_system = _default_system_prompt()
         if system_prompt or default_system:
             messages.append({"role": "system", "content": system_prompt or default_system})
 
@@ -184,8 +230,39 @@ class OllamaCloudClient:
         # Add current user message
         messages.append({"role": "user", "content": user_message})
 
+        import json
+        import logging
+        logger = logging.getLogger("mira_testing_bot.api")
+        logger.setLevel(logging.DEBUG)
+        if not logger.handlers:
+            fh = logging.FileHandler("bot_api_requests.log")
+            fh.setLevel(logging.DEBUG)
+            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+            fh.setFormatter(formatter)
+            logger.addHandler(fh)
+
+        async def log_request(request: httpx.Request) -> None:
+            await request.aread()
+            body = request.content.decode('utf-8', errors='replace')
+            try:
+                if body:
+                    body = json.dumps(json.loads(body), indent=2)
+            except Exception:
+                pass
+            logger.debug(f"--> Request: {request.method} {request.url}\nHeaders: {dict(request.headers)}\nPayload:\n{body}")
+
+        async def log_response(response: httpx.Response) -> None:
+            await response.aread()
+            body = response.text
+            try:
+                if body:
+                    body = json.dumps(json.loads(body), indent=2)
+            except Exception:
+                pass
+            logger.debug(f"<-- Response: {response.request.method} {response.request.url} - Status {response.status_code}\nPayload:\n{body}\n{'-'*80}")
+
         # Make request to Ollama Cloud API
-        async with httpx.AsyncClient(timeout=self.timeout) as client:
+        async with httpx.AsyncClient(timeout=self.timeout, event_hooks={'request': [log_request], 'response': [log_response]}) as client:
             try:
                 response = await client.post(
                     f"{self.base_url}/api/chat",
@@ -258,3 +335,16 @@ class MockLLMClient:
         lines.append("\n[This is a placeholder response. To get AI-generated answers, configure LLM_API_KEY]")
 
         return "\n".join(lines)
+
+
+def _default_system_prompt() -> str:
+    return (
+        "You are the conversational response layer for the Mira Kontext Testing Bot. "
+        "The surrounding bot can store sources, query memory, list sources, retrieve "
+        "documents, and fetch or search web pages through API actions before you are called. "
+        "Do not claim that the bot has no ingest endpoints, APIs, storage access, or web "
+        "fetch capability. If an API action has already been completed, summarize only the "
+        "action result provided by the bot. If the user asks for web research and no web "
+        "action has been run yet, explicitly suggest using /search-web <query> or /crawl <url>. "
+        "Answer using the retrieved context and conversation history. Be concise and clear."
+    )

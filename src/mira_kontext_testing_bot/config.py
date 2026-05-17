@@ -37,11 +37,20 @@ class Settings(BaseSettings):
     debug: bool = Field(default=False)
 
     # LLM Configuration
+    nebius_api_key: str | None = Field(default=None)
     llm_api_key: str | None = Field(default=None)
-    llm_base_url: str = Field(default="https://api.openai.com/v1")
-    llm_model: str = Field(default="gpt-4o-mini")
+    llm_base_url: str = Field(default="https://api.tokenfactory.nebius.com/v1/")
+    llm_model: str = Field(default="openai/gpt-oss-120b")
     llm_timeout: float = Field(default=30.0)
-    llm_provider: str = Field(default="openai")  # openai, ollama, openrouter
+    llm_provider: str = Field(default="nebius")  # nebius, openai, ollama, openrouter
+
+    # Fast intent classification configuration
+    intent_api_key: str | None = Field(default=None)
+    intent_base_url: str = Field(default="https://api.tokenfactory.nebius.com/v1/")
+    intent_model: str = Field(default="openai/gpt-oss-120b")
+    intent_provider: str = Field(default="nebius")
+    intent_confidence_threshold: float = Field(default=0.75)
+    intent_timeout: float = Field(default=8.0)
 
     # Web Fetching Configuration
     firecrawl_api_key: str | None = Field(default=None)

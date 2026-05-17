@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from contextlib import suppress
-from typing import Any
+from typing import Any, cast
 from uuid import UUID
 
 import httpx
@@ -16,6 +16,7 @@ from .errors import (
     KontextAPIError,
     NotFoundError,
     PermissionError,
+    SourceIsolationError,
     ValidationError,
 )
 from .models import (
@@ -47,6 +48,7 @@ class KontextClient:
             raise ConfigurationError("Kontext API token is required. Set KONTEXT_TOKEN env var.")
 
         self._client: httpx.AsyncClient | None = None
+        self.source_collections_supported: bool | None = None
 
     async def __aenter__(self) -> KontextClient:
         await self.connect()
@@ -57,6 +59,41 @@ class KontextClient:
 
     async def connect(self) -> None:
         """Initialize the HTTP client."""
+        import json
+        import logging
+
+        # Set up a dedicated logger for the API client
+        logger = logging.getLogger("mira_testing_bot.api")
+        logger.setLevel(logging.DEBUG)
+
+        # Avoid duplicate handlers if connect() is called multiple times
+        if not logger.handlers:
+            fh = logging.FileHandler("bot_api_requests.log")
+            fh.setLevel(logging.DEBUG)
+            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+            fh.setFormatter(formatter)
+            logger.addHandler(fh)
+
+        async def log_request(request: httpx.Request) -> None:
+            await request.aread()
+            body = request.content.decode('utf-8', errors='replace')
+            try:
+                if body:
+                    body = json.dumps(json.loads(body), indent=2)
+            except Exception:
+                pass
+            logger.debug(f"--> Request: {request.method} {request.url}\nHeaders: {dict(request.headers)}\nPayload:\n{body}")
+
+        async def log_response(response: httpx.Response) -> None:
+            await response.aread()
+            body = response.text
+            try:
+                if body:
+                    body = json.dumps(json.loads(body), indent=2)
+            except Exception:
+                pass
+            logger.debug(f"<-- Response: {response.request.method} {response.request.url} - Status {response.status_code}\nPayload:\n{body}\n{'-'*80}")
+
         self._client = httpx.AsyncClient(
             base_url=self.base_url,
             headers={
@@ -65,6 +102,10 @@ class KontextClient:
                 "Accept": "application/json",
             },
             timeout=self.timeout,
+            event_hooks={
+                'request': [log_request],
+                'response': [log_response]
+            }
         )
 
     async def close(self) -> None:
@@ -95,6 +136,12 @@ class KontextClient:
         if status == 404:
             raise NotFoundError(f"Resource not found: {detail}")
         if status == 422:
+            if _is_stale_ingest_contract(detail):
+                self.source_collections_supported = False
+                raise SourceIsolationError(_SOURCE_ISOLATION_UNSUPPORTED_MESSAGE)
+            if _is_stale_source_collection_query_contract(detail):
+                self.source_collections_supported = False
+                raise SourceIsolationError(_SOURCE_ISOLATION_UNSUPPORTED_MESSAGE)
             raise ValidationError(f"Validation error: {detail}")
 
         raise KontextAPIError(f"API error {status}: {detail}")
@@ -163,6 +210,8 @@ class KontextClient:
             response = await client.post("/v1/query", json=payload)
             response.raise_for_status()
             data = response.json()
+            if source_collections is not None:
+                self.source_collections_supported = True
 
             return QueryResult(
                 audit_id=UUID(data["audit_id"]),
@@ -170,6 +219,10 @@ class KontextClient:
                 permission_counters=data.get("permission_counters", {}),
             )
         except HTTPStatusError as exc:
+            detail = _error_detail(exc.response)
+            if _is_stale_source_collection_query_contract(detail):
+                self.source_collections_supported = False
+                raise SourceIsolationError(_SOURCE_ISOLATION_UNSUPPORTED_MESSAGE) from exc
             self._handle_error(exc)
             raise
 
@@ -211,16 +264,17 @@ class KontextClient:
         settings = get_settings()
 
         payload: dict[str, Any] = {
-            "principal": {
-                "external_id": (principal.external_id if principal else settings.bot_principal_id),
-                "display_name": (principal.display_name if principal else settings.bot_display_name),
-            },
             "source_system": source_system,
             "source_object_type": source_object_type,
             "source_object_id": source_object_id,
             "content": content,
+            "principal": {
+                "external_id": (principal.external_id if principal else settings.bot_principal_id),
+                "display_name": (principal.display_name if principal else settings.bot_display_name),
+            },
         }
-
+        if collection_external_id:
+            payload["collection_external_id"] = collection_external_id
         if title:
             payload["title"] = title
         if metadata:
@@ -231,22 +285,18 @@ class KontextClient:
             payload["source_version"] = source_version
         if source_url:
             payload["source_url"] = source_url
-        if collection_external_id:
-            payload["collection_external_id"] = collection_external_id
 
         try:
             response = await client.post("/v1/ingest/records", json=payload)
             response.raise_for_status()
             data = response.json()
-
-            return IngestResult(
-                content_item_id=UUID(data["content_item_id"]),
-                source_record_id=UUID(data["source_record_id"]),
-                checksum=data["checksum"],
-                status=data["status"],
-                entity_ids=[UUID(eid) for eid in data.get("entity_ids", [])],
-            )
+            self.source_collections_supported = True
+            return _parse_ingest_result(data)
         except HTTPStatusError as exc:
+            detail = _error_detail(exc.response)
+            if _is_stale_ingest_contract(detail):
+                self.source_collections_supported = False
+                raise SourceIsolationError(_SOURCE_ISOLATION_UNSUPPORTED_MESSAGE) from exc
             self._handle_error(exc)
             raise
 
@@ -425,3 +475,56 @@ class KontextClient:
                 return None
             self._handle_error(exc)
             raise
+
+
+_SOURCE_ISOLATION_UNSUPPORTED_MESSAGE = (
+    "The API server does not support source collection isolation. "
+    "Restart/redeploy mira-kontext-api after the source collection migration before using "
+    "blank-user source workflows."
+)
+
+
+def _is_stale_ingest_contract(detail: object) -> bool:
+    """Detect old API schemas that reject principal-aware source records."""
+    return _has_extra_forbidden_field(detail, {"principal", "collection_external_id"})
+
+
+def _is_stale_source_collection_query_contract(detail: object) -> bool:
+    """Detect old API schemas that reject source collection scoped queries."""
+    return _has_extra_forbidden_field(detail, {"source_collections"})
+
+
+def _has_extra_forbidden_field(detail: object, rejected_fields: set[str]) -> bool:
+    if not isinstance(detail, list):
+        return False
+    detail_items = cast(list[object], detail)
+    for item in detail_items:
+        if not isinstance(item, dict):
+            continue
+        typed_item = cast(dict[str, object], item)
+        if typed_item.get("type") != "extra_forbidden":
+            continue
+        loc = typed_item.get("loc")
+        loc_parts = cast(list[object], loc) if isinstance(loc, list) else []
+        if any(isinstance(part, str) and part in rejected_fields for part in loc_parts):
+            return True
+    return False
+
+
+def _error_detail(response: httpx.Response) -> object:
+    with suppress(Exception):
+        body = response.json()
+        if isinstance(body, dict):
+            typed_body = cast(dict[str, object], body)
+            return typed_body.get("detail")
+    return None
+
+
+def _parse_ingest_result(data: dict[str, Any]) -> IngestResult:
+    return IngestResult(
+        content_item_id=UUID(data["content_item_id"]),
+        source_record_id=UUID(data["source_record_id"]),
+        checksum=data["checksum"],
+        status=data["status"],
+        entity_ids=[UUID(eid) for eid in data.get("entity_ids", [])],
+    )

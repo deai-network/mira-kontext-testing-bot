@@ -257,7 +257,7 @@ def search_web(
     api_url: str | None,
     token: str | None,
 ) -> None:
-    """Search the web via DuckDuckGo, fetch top results, and ingest into API."""
+    """Search the web via Firecrawl, fetch top results, and ingest into API."""
     settings = get_settings()
     effective_url = api_url or ctx.obj.get("api_url") or settings.kontext_api_url
     effective_token = token or ctx.obj.get("token") or settings.kontext_token

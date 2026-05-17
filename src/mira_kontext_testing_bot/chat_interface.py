@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import re
 import sys
-from typing import Any
+import uuid
+from typing import Any, cast
 
 from rich.console import Console
 from rich.markdown import Markdown
@@ -14,11 +16,18 @@ from rich.table import Table
 from .client import KontextClient
 from .config import get_settings
 from .errors import KontextAPIError
+from .intent_classifier import IntentClassifier, IntentDecision
 from .llm_client import LLMClient, MockLLMClient, OllamaCloudClient
 from .memory_manager import MemoryManager
 from .models import Session
 from .session import ChatContext, get_session_manager
 from .web_fetcher import WebFetcher, WebFetchError
+
+_STORE_RECENT_WEB_RE = re.compile(
+    r"\b(store|save|ingest|add|archive|index)\b.*\b"
+    r"(this|that|it|info|information|research|results?)\b",
+    re.IGNORECASE,
+)
 
 
 class ChatInterface:
@@ -32,6 +41,7 @@ class ChatInterface:
         self.memory_manager: MemoryManager | None = None
         self.current_context: ChatContext | None = None
         self.llm: Any | None = None
+        self.intent_classifier: IntentClassifier | None = None
         self.web_fetcher: WebFetcher | None = None
 
     def print_banner(self) -> None:
@@ -98,6 +108,15 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
             self.memory_manager = MemoryManager(self.client)
             self.current_context = self.session_manager.get_or_create_default_context()
+            self.intent_classifier = IntentClassifier()
+            if self.intent_classifier.is_configured:
+                self.console.print(
+                    f"[green]Intent classifier ready:[/green] {self.settings.intent_model}"
+                )
+            else:
+                self.console.print(
+                    "[dim]Intent classifier disabled:[/dim] Set INTENT_API_KEY to enable"
+                )
 
             # Initialize web fetcher if configured
             self.web_fetcher = WebFetcher()
@@ -107,12 +126,12 @@ Any text not starting with `/` is sent as a user message and stored in conversat
                 self.console.print("[dim]Web fetcher disabled:[/dim] Set FIRECRAWL_API_KEY to enable")
 
             # Initialize LLM client based on provider
-            if self.settings.llm_api_key:
+            if self.settings.llm_api_key or self.settings.nebius_api_key:
                 provider = self.settings.llm_provider.lower()
                 if provider == "ollama":
                     self.llm = OllamaCloudClient()
                     self.console.print(f"[green]Ollama Cloud ready:[/green] {self.settings.llm_model}")
-                elif provider in ("openai", "openrouter"):
+                elif provider in ("openai", "openrouter", "nebius"):
                     self.llm = LLMClient()
                     self.console.print(f"[green]LLM ready:[/green] {self.settings.llm_model}")
                 else:
@@ -404,6 +423,16 @@ Any text not starting with `/` is sent as a user message and stored in conversat
             self.console.print("[red]Not connected.[/red]")
             return
 
+        if (
+            not self.current_context.allows_sources
+            and getattr(self.client, "source_collections_supported", None) is not True
+        ):
+            self.console.print(
+                "[red]Cannot list sources safely:[/red] source collection isolation "
+                "has not been verified for this API server."
+            )
+            return
+
         try:
             sources = await self.client.list_sources(self.current_context.principal)
             if sources:
@@ -464,15 +493,12 @@ Any text not starting with `/` is sent as a user message and stored in conversat
         source_type = Prompt.ask("Source object type", default="test-record")
         source_id = Prompt.ask("Source object ID", default="test-001")
         title = Prompt.ask("Title", default=f"Test record {source_id}")
-        collection_external_id = self.current_context.private_source_collection_external_id
-        if collection_external_id is None and self.current_context.source_collection_external_ids:
-            collection_external_id = self.current_context.source_collection_external_ids[0]
-        if collection_external_id is None:
-            raw_collection = Prompt.ask(
-                "Source collection (blank for user-private)",
-                default="",
-            ).strip()
-            collection_external_id = raw_collection or None
+        private_label = self.current_context.private_collection_label
+        raw_collection = Prompt.ask(
+            f"Source collection (blank for private: {private_label})",
+            default="",
+        ).strip()
+        collection_external_id, target_label = self._resolve_ingest_collection(raw_collection)
 
         self.console.print("Enter content (Ctrl+D or empty line to finish):")
         lines: list[str] = []
@@ -491,6 +517,7 @@ Any text not starting with `/` is sent as a user message and stored in conversat
             return
 
         try:
+            self.console.print(f"[dim]Target collection:[/dim] {target_label}")
             with self.console.status("[dim]Ingesting...[/dim]"):
                 result = await self.client.ingest_record(
                     content=content,
@@ -510,6 +537,15 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
         except KontextAPIError as exc:
             self.console.print(f"[red]Ingestion failed:[/red] {exc}")
+
+    def _resolve_ingest_collection(self, raw_collection: str) -> tuple[str | None, str]:
+        """Resolve user-entered collection text to API payload and display label."""
+        collection_external_id = raw_collection.strip() or None
+        if collection_external_id:
+            return collection_external_id, collection_external_id
+        if not self.current_context:
+            return None, "user-private (private default)"
+        return None, f"{self.current_context.private_collection_label} (private default)"
 
     async def handle_status(self) -> None:
         """Handle the /status command."""
@@ -629,6 +665,10 @@ Any text not starting with `/` is sent as a user message and stored in conversat
             # Add to local history
             self.current_context.add_message("user", message)
 
+            intent_handled = await self._handle_intent_decision(message)
+            if intent_handled:
+                return
+
             # Build context pack
             with self.console.status("[dim]Building context...[/dim]"):
                 context_pack = await self.memory_manager.build_context_pack(
@@ -710,6 +750,256 @@ Any text not starting with `/` is sent as a user message and stored in conversat
 
         except KontextAPIError as exc:
             self.console.print(f"[red]Error:[/red] {exc}")
+
+    async def _handle_intent_decision(self, message: str) -> bool:
+        """Route high-confidence natural-language intents through existing actions."""
+        if not self.intent_classifier or not self.client or not self.current_context:
+            return False
+
+        decision = await self.intent_classifier.classify(message)
+        is_actionable = decision.is_actionable(
+            message,
+            self.settings.intent_confidence_threshold,
+        )
+
+        if (
+            self._is_recent_web_store_confirmation(message)
+            and not (is_actionable and decision.intent == "ingest_source")
+        ):
+            response = self._recent_web_store_confirmation_response()
+            await self._store_and_display_action_response(response)
+            return True
+
+        if not is_actionable:
+            return False
+
+        # Blank-user sessions are memory-only by design. Do not let
+        # classifier-triggered source reads bypass that boundary.
+        if (
+            not self.current_context.allows_sources
+            and decision.intent in {"list_sources", "get_document"}
+        ):
+            return False
+
+        if decision.intent == "ingest_source":
+            response = await self._execute_ingest_intent(decision)
+        elif decision.intent == "list_sources":
+            response = await self._execute_list_sources_intent()
+        elif decision.intent == "query_sources":
+            response = await self._execute_query_sources_intent(decision, message)
+        elif decision.intent == "get_document":
+            response = await self._execute_get_document_intent(decision)
+        elif decision.intent == "search_memory":
+            response = await self._execute_search_memory_intent(decision, message)
+        elif decision.intent == "web_search":
+            response = await self._execute_web_search_intent(decision, message)
+        else:
+            return False
+
+        await self._store_and_display_action_response(response)
+        return True
+
+    async def _execute_ingest_intent(self, decision: IntentDecision) -> str:
+        if not self.client or not self.current_context:
+            return "Ingest skipped: the bot is not connected."
+
+        source_system = decision.source_system or "chat"
+        source_object_type = decision.source_object_type or "note"
+        source_object_id = decision.source_object_id or f"chat-{uuid.uuid4().hex[:12]}"
+        title = decision.title or source_object_id
+        collection_label = decision.collection_external_id or (
+            f"{self.current_context.private_collection_label} (private default)"
+        )
+
+        result = await self.client.ingest_record(
+            content=decision.content or "",
+            source_system=source_system,
+            source_object_type=source_object_type,
+            source_object_id=source_object_id,
+            title=title,
+            metadata={"ingested_by": "testing_bot", "ingest_mode": "intent_bridge"},
+            principal=self.current_context.principal,
+            collection_external_id=decision.collection_external_id,
+        )
+        return (
+            f"Ingested '{title}' into {collection_label}. "
+            f"Status: {result.status}. Source record: {result.source_record_id}"
+        )
+
+    async def _execute_list_sources_intent(self) -> str:
+        if not self.client or not self.current_context:
+            return "Sources unavailable: the bot is not connected."
+        sources = await self.client.list_sources(self.current_context.principal)
+        if not sources:
+            return "No sources found for the current user."
+        lines = [f"Found {len(sources)} source(s):"]
+        for source in sources[:10]:
+            lines.append(
+                "- "
+                f"{source.get('source_system', 'unknown')}/"
+                f"{source.get('source_object_type', 'unknown')}: "
+                f"{source.get('source_object_id', 'unknown')}"
+            )
+        return "\n".join(lines)
+
+    async def _execute_query_sources_intent(
+        self,
+        decision: IntentDecision,
+        message: str,
+    ) -> str:
+        if not self.client or not self.current_context:
+            return "Query unavailable: the bot is not connected."
+        result = await self.client.query(
+            query=decision.query or message,
+            principal=self.current_context.principal,
+            limit=8,
+            source_collections=self._source_collections_for_source_read(),
+            memory=self.current_context.to_api_format(),
+        )
+        if not result.items:
+            return "No matching context found."
+        lines = [f"Found {len(result.items)} matching item(s):"]
+        for item in result.items[:5]:
+            lines.append(f"- {item.title or 'Untitled'} ({item.short_id}): {item.snippet[:160]}")
+        return "\n".join(lines)
+
+    async def _execute_get_document_intent(self, decision: IntentDecision) -> str:
+        if not self.client or not self.current_context or not decision.short_id:
+            return "Document lookup skipped: no short ID was provided."
+        document = await self.client.get_document(decision.short_id, self.current_context.principal)
+        if document is None:
+            return f"Document not found: {decision.short_id}"
+        return (
+            f"Document: {document.get('title') or decision.short_id}\n"
+            f"{document.get('body', 'No content')}"
+        )
+
+    async def _execute_search_memory_intent(
+        self,
+        decision: IntentDecision,
+        message: str,
+    ) -> str:
+        if not self.memory_manager or not self.current_context:
+            return "Memory search unavailable: the bot is not connected."
+        results = await self.memory_manager.search_memory(
+            query=decision.query or message,
+            context=self.current_context,
+            limit=8,
+        )
+        if not results:
+            return "No matching memory found."
+        lines = [f"Found {len(results)} memory item(s):"]
+        for item in results[:5]:
+            role = item.get("role", "unknown")
+            content = str(item.get("content", ""))[:160]
+            lines.append(f"- [{role}] {content}")
+        return "\n".join(lines)
+
+    async def _execute_web_search_intent(
+        self,
+        decision: IntentDecision,
+        message: str,
+    ) -> str:
+        if not self.client or not self.current_context:
+            return "Web search unavailable: the bot is not connected."
+        if not self.web_fetcher or not self.web_fetcher.is_configured():
+            return "Web search unavailable: set FIRECRAWL_API_KEY in .env."
+
+        query = (decision.query or message).strip()
+        if not query:
+            return "Web search skipped: no query was provided."
+
+        try:
+            results = await self.web_fetcher.search_and_ingest(
+                query=query,
+                client=self.client,
+                context=self.current_context,
+                max_results=3,
+            )
+        except WebFetchError as exc:
+            return f"Web search failed: {exc}"
+        if not results:
+            return f"No web results found for: {query}"
+
+        succeeded = [result for result in results if "error" not in result]
+        failed = [result for result in results if "error" in result]
+        collection_label = f"{self.current_context.private_collection_label} (private default)"
+        self.current_context.metadata["last_web_search"] = {
+            "query": query,
+            "succeeded_count": len(succeeded),
+            "failed_count": len(failed),
+            "collection_label": self.current_context.private_collection_label,
+            "results": succeeded,
+        }
+
+        lines = [
+            f"Web search ingested {len(succeeded)} page(s) for: {query}",
+            f"Stored in Mira Kontext sources for {collection_label}.",
+        ]
+        for result in succeeded[:3]:
+            lines.append(f"- {result.get('title', 'Untitled')} ({result.get('url', 'unknown url')})")
+        if failed:
+            lines.append(f"Failed pages: {len(failed)}")
+        return "\n".join(lines)
+
+    def _is_recent_web_store_confirmation(self, message: str) -> bool:
+        if not self.current_context:
+            return False
+        last_web_search = self.current_context.metadata.get("last_web_search")
+        return bool(last_web_search and _STORE_RECENT_WEB_RE.search(message))
+
+    def _recent_web_store_confirmation_response(self) -> str:
+        if not self.current_context:
+            return "No active context is available."
+        last_web_search = self.current_context.metadata.get("last_web_search")
+        if not isinstance(last_web_search, dict):
+            return "No recent web research has been stored yet."
+        web_search = cast(dict[str, object], last_web_search)
+
+        query = str(web_search.get("query", "the last web search"))
+        raw_succeeded_count = web_search.get("succeeded_count", 0)
+        raw_failed_count = web_search.get("failed_count", 0)
+        succeeded_count = raw_succeeded_count if isinstance(raw_succeeded_count, int) else 0
+        failed_count = raw_failed_count if isinstance(raw_failed_count, int) else 0
+        collection_label = str(
+            web_search.get("collection_label", self.current_context.private_collection_label)
+        )
+        lines = [
+            f"Already stored {succeeded_count} web page(s) from '{query}' in Mira Kontext sources.",
+            f"Collection: {collection_label} (private default)",
+        ]
+        results = web_search.get("results", [])
+        if isinstance(results, list):
+            for result in cast(list[object], results)[:3]:
+                if isinstance(result, dict):
+                    web_result = cast(dict[str, object], result)
+                    lines.append(
+                        f"- {web_result.get('title', 'Untitled')} "
+                        f"({web_result.get('url', 'unknown url')})"
+                    )
+        if failed_count:
+            lines.append(f"Failed pages during ingest: {failed_count}")
+        return "\n".join(lines)
+
+    def _source_collections_for_source_read(self) -> list[str] | None:
+        if not self.current_context:
+            return None
+        if self.current_context.allows_sources:
+            return self.current_context.source_collections_for_query
+        return self.current_context.source_collections_for_query or [
+            self.current_context.private_collection_label
+        ]
+
+    async def _store_and_display_action_response(self, response: str) -> None:
+        if self.memory_manager and self.current_context:
+            await self.memory_manager.store_message(
+                context=self.current_context,
+                role="assistant",
+                content=response,
+                metadata={"intent_action": True},
+            )
+            self.current_context.add_message("assistant", response)
+        self.console.print(f"[green]Bot:[/green] {response}")
 
     async def _generate_response(self, message: str, context_pack: dict[str, Any]) -> str:
         """Generate a response using the LLM with retrieved context."""

@@ -41,3 +41,9 @@ class ValidationError(KontextAPIError):
     """Raised when request validation fails."""
 
     pass
+
+
+class SourceIsolationError(KontextAPIError):
+    """Raised when the API cannot safely enforce source isolation."""
+
+    pass

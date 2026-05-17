@@ -58,6 +58,13 @@ class ChatContext:
         """Collection scope to pass to query endpoints."""
         return self.source_collection_external_ids
 
+    @property
+    def private_collection_label(self) -> str:
+        """Expected private collection label for display only."""
+        if self.private_source_collection_external_id:
+            return self.private_source_collection_external_id
+        return private_collection_external_id(self.principal.external_id)
+
 
 class SessionManager:
     """Manages chat sessions and their context."""
@@ -210,11 +217,7 @@ class SessionManager:
 
     def private_collection_external_id(self, principal: Principal) -> str:
         """Match the API's deterministic private collection id for a principal."""
-        normalized = "".join(
-            character.lower() if character.isalnum() or character in {"_", "-"} else "-"
-            for character in principal.external_id
-        ).strip("-")
-        return f"user-{normalized or 'principal'}-private"
+        return private_collection_external_id(principal.external_id)
 
     def get_context(self, session_id: str) -> ChatContext | None:
         """Retrieve an active chat context by session ID."""
@@ -273,3 +276,12 @@ def get_session_manager() -> SessionManager:
     if _session_manager is None:
         _session_manager = SessionManager()
     return _session_manager
+
+
+def private_collection_external_id(principal_external_id: str) -> str:
+    """Compute the API's deterministic user-private collection id."""
+    normalized = "".join(
+        character.lower() if character.isalnum() or character in {"_", "-"} else "-"
+        for character in principal_external_id
+    ).strip("-")
+    return f"user-{normalized or 'principal'}-private"

@@ -84,7 +84,7 @@ Available commands in chat mode:
 | `/search <text>` | Search conversation memory |
 | `/sources` | List ingested sources |
 | `/doc <short_id>` | Retrieve a document |
-| `/ingest` | Interactive content ingestion |
+| `/ingest` | Interactive content ingestion into the current user's private context by default |
 | `/crawl <url>` | Fetch and ingest a web page (requires FIRECRAWL_API_KEY) |
 | `/search-web <query>` | Search the web and ingest top results |
 | `/test <suite>` | Run test scenarios |
@@ -93,6 +93,8 @@ Available commands in chat mode:
 | `/quit` | Exit the bot |
 
 Use `/blank-user` when you want a clean storage/retrieval run for embedding-backed memory tests. It creates a fresh session for the selected principal, so subsequent `/memory`, `/search`, chat storage, and context queries are scoped to that user/project/session combination.
+
+Natural-language chat can also trigger existing API actions when the fast intent classifier is configured. Phrases like “ingest this dataset...” or “show my sources” are routed through the same client methods as `/ingest` and `/sources`; no extra CLI commands are added. Auto-ingest requires explicit write wording and stores into the current user's private context by default.
 
 ### CLI Commands
 
@@ -147,7 +149,7 @@ The bot can crawl the web and ingest pages directly into the Kontext API as sour
 ### Features
 
 - **Manual Crawl**: Fetch a specific URL via Firecrawl and ingest it into your private collection (`/crawl`).
-- **Web Search**: Search DuckDuckGo, fetch top results, and ingest them automatically (`/search-web`).
+- **Web Search**: Search with Firecrawl, fetch top results, and ingest them automatically (`/search-web`).
 - **Auto-Propose**: When `AUTO_WEB_SEARCH=true` and a chat query returns no local sources, the bot asks if you want to search the web, then re-queries after ingestion.
 
 ### Configuration
@@ -161,6 +163,49 @@ FIRECRAWL_API_KEY=fc-xxxxxxxxxxxxxxxxxxxxxxxx
 # Whether to propose web search when local sources are empty
 AUTO_WEB_SEARCH=true
 ```
+
+## Nebius Endpoints
+
+The bot uses Nebius OpenAI-compatible endpoints for response generation and intent classification. Configure:
+
+```bash
+NEBIUS_API_KEY=your-nebius-key
+LLM_BASE_URL=https://api.tokenfactory.nebius.com/v1/
+LLM_MODEL=openai/gpt-oss-120b
+LLM_PROVIDER=nebius
+
+# Optional separate classifier key
+INTENT_API_KEY=
+INTENT_BASE_URL=https://api.tokenfactory.nebius.com/v1/
+INTENT_MODEL=openai/gpt-oss-120b
+INTENT_PROVIDER=nebius
+INTENT_CONFIDENCE_THRESHOLD=0.75
+INTENT_TIMEOUT=8.0
+```
+
+If `INTENT_API_KEY` is not set, the classifier uses `NEBIUS_API_KEY`.
+
+The internal client call pattern follows the OpenAI SDK style:
+
+```python
+import os
+from openai import AsyncOpenAI
+
+client = AsyncOpenAI(
+    base_url="https://api.tokenfactory.nebius.com/v1/",
+    api_key=os.environ.get("NEBIUS_API_KEY"),
+)
+
+response = await client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[
+        {"role": "system", "content": "SYSTEM_PROMPT"},
+        {"role": "user", "content": [{"type": "text", "text": "USER_MESSAGE"}]},
+    ],
+)
+```
+
+For private-context ingest, the bot omits `collection_external_id` so the API creates or reuses the current user's private source collection.
 
 ### Interactive Chat Commands
 
@@ -300,9 +345,43 @@ docker compose -f docker/docker-compose.yml up
 poetry run kontext-bot chat
 ```
 
+## API Request Logging
+
+The bot automatically logs all API HTTP traffic (both to the Kontext API and the Nebius/Ollama LLM endpoints) into `bot_api_requests.log` in the testing bot directory.
+
+To monitor API calls in real-time and review the JSON payloads, you can run a tail command in your terminal while interacting with the bot in another window:
+
+```bash
+tail -f bot_api_requests.log
+```
+
+Alternatively, you can monitor the logs directly from an interactive Python REPL:
+
+```python
+import os
+import time
+
+def tail_bot_logs():
+    """Tails the bot API logger file."""
+    log_path = "bot_api_requests.log"
+    if not os.path.exists(log_path):
+        print(f"Waiting for {log_path} to be created...")
+    
+    with open(log_path, "a+") as f:
+        f.seek(0, os.SEEK_END)
+        while True:
+            line = f.readline()
+            if not line:
+                time.sleep(0.5)
+                continue
+            print(line, end="")
+
+tail_bot_logs()
+```
+
 ## License
 
-MIT License - See LICENSE file for details.
+Proprietary - Owned by deAI Labs UG (haftungsbeschränkt). See LICENSE file for details.
 
 ## Contributing
 
