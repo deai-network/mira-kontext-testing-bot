@@ -47,3 +47,9 @@ class SourceIsolationError(KontextAPIError):
     """Raised when the API cannot safely enforce source isolation."""
 
     pass
+
+
+class CatenaAPIError(BotError):
+    """Raised when the Catena AI API returns an error."""
+
+    pass

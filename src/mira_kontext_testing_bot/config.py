@@ -20,6 +20,17 @@ class Settings(BaseSettings):
     kontext_api_url: str = Field(default="http://localhost:8080")
     kontext_token: str | None = Field(default=None)
 
+    # Catena AI integration (catena-integration branch / harness)
+    catena_api_url: str = Field(default="http://localhost:8000")
+    catena_token: str | None = Field(default=None)
+    catena_identifier: str | None = Field(default=None)
+    catena_password: str | None = Field(default=None)
+    catena_default_flow_id: str | None = Field(default="router")
+    catena_project_id: str = Field(default="catena-default-project")
+    catena_project_title: str = Field(default="Catena Integration Project")
+    catena_thread_prefix: str = Field(default="catena-thread")
+    catena_memory_search_before_chat: bool = Field(default=True)
+
     # Bot Identity
     bot_principal_id: str = Field(default="testing-bot")
     bot_display_name: str = Field(default="Mira Kontext Testing Bot")

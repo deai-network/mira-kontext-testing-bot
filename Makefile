@@ -1,6 +1,6 @@
 # Makefile for Mira Kontext Testing Bot
 
-.PHONY: help install install-dev test lint format typecheck check repl chat test-api status query clean
+.PHONY: help install install-dev test lint format typecheck check repl chat catena-chat test-api status query clean
 
 help:
 	@echo "Available targets:"
@@ -11,7 +11,8 @@ help:
 	@echo "  format       Format code with ruff"
 	@echo "  typecheck    Run pyright type checker"
 	@echo "  check        Run all checks (lint, format, typecheck)"
-	@echo "  chat         Start interactive chat mode"
+	@echo "  chat         Start interactive chat mode (Kontext-only tester)"
+	@echo "  catena-chat  Catena /chat + Kontext memory integration harness"
 	@echo "  test-api     Run full test suite against API"
 	@echo "  status       Check API status"
 	@echo "  query (Q=...) Run a single query"
@@ -41,6 +42,9 @@ check: lint format typecheck
 
 chat:
 	poetry run python -m mira_kontext_testing_bot chat
+
+catena-chat:
+	poetry run python -m mira_kontext_testing_bot catena-chat
 
 test-api:
 	poetry run python -m mira_kontext_testing_bot test full

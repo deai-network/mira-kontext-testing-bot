@@ -5,7 +5,7 @@ description = "Agentic testing chatbot for Mira Kontext API"
 authors = ["Mira Team"]
 readme = "README.md"
 packages = [{include = "mira_kontext_testing_bot", from = "src"}]
-scripts = { kontext-bot = "mira_kontext_testing_bot.cli:main" }
+scripts = { kontext-bot = "mira_kontext_testing_bot.cli:main", catena-kontext = "mira_kontext_testing_bot.cli:main" }
 
 [tool.poetry.dependencies]
 python = "^3.12"

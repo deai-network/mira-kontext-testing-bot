@@ -32,6 +32,29 @@ poetry install
 pip install -e .
 ```
 
+## Catena AI integration (`catena-integration` branch)
+
+This branch adds a **Catena + Kontext memory harness** without replacing the original Kontext-only tester.
+
+```bash
+cp .env.example .env
+# Set KONTEXT_TOKEN (memory:read + memory:write)
+# Set CATENA_API_URL and CATENA_TOKEN (or CATENA_IDENTIFIER + CATENA_PASSWORD)
+
+make catena-chat
+# or: poetry run kontext-bot catena-chat
+```
+
+Flow per message:
+
+1. Load Kontext `/v1/memory/recent` (and optional `/v1/memory/search`)
+2. Call Catena `POST /chat` with `thread_id` = Kontext session id
+3. Persist user + assistant turns via `POST /v1/memory/messages`
+
+Catena `thread_id` maps to Kontext `session.external_id`. Catena `/auth/me` maps to Kontext `principal.external_id` as `catena:user:{id}`.
+
+The standalone successor repo is **`catena-kontext-harness`** (same integration, stripped-down package).
+
 ## Configuration
 
 Create a `.env` file in the project root:

@@ -8,6 +8,7 @@ import click
 from rich.console import Console
 from rich.panel import Panel
 
+from .catena_chat_interface import CatenaChatInterface
 from .chat_interface import ChatInterface
 from .client import KontextClient
 from .config import get_settings, load_env_file
@@ -53,6 +54,41 @@ def chat(ctx: click.Context) -> None:
     interface = ChatInterface()
     try:
         asyncio.run(interface.run())
+    except SystemExit as exc:
+        sys.exit(exc.code)
+    except Exception as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        if settings.debug:
+            raise
+        sys.exit(1)
+
+
+@cli.command("catena-chat")
+@click.pass_context
+def catena_chat(ctx: click.Context) -> None:
+    """Start Catena /chat with Kontext memory integration."""
+    settings = get_settings()
+    if ctx.obj.get("api_url"):
+        settings.kontext_api_url = ctx.obj["api_url"]
+    if ctx.obj.get("token"):
+        settings.kontext_token = ctx.obj["token"]
+    if ctx.obj.get("debug"):
+        settings.debug = True
+
+    if not settings.kontext_token:
+        console.print("[red]Error: KONTEXT_TOKEN required (memory:read + memory:write).[/red]")
+        sys.exit(1)
+
+    interface = CatenaChatInterface()
+
+    async def _run() -> None:
+        try:
+            await interface.run()
+        finally:
+            await interface.shutdown()
+
+    try:
+        asyncio.run(_run())
     except SystemExit as exc:
         sys.exit(exc.code)
     except Exception as exc:
@@ -338,6 +374,19 @@ def config() -> None:
     firecrawl_status = "Set" if settings.firecrawl_api_key else "Not set"
     console.print(f"Firecrawl:  {firecrawl_status} (crawl/search-web)")
     console.print(f"Auto Web:   {settings.auto_web_search}")
+
+    console.print("\n[bold]Catena integration[/bold]")
+    console.print(f"Catena URL: {settings.catena_api_url}")
+    catena_token_status = "Set" if settings.catena_token else "Not set"
+    console.print(f"Catena token: {catena_token_status}")
+    login_status = (
+        "Set"
+        if settings.catena_identifier and settings.catena_password
+        else "Not set"
+    )
+    console.print(f"Catena login: {login_status}")
+    console.print(f"Catena flow:  {settings.catena_default_flow_id or '(server default)'}")
+    console.print(f"Catena project: {settings.catena_project_id}")
 
 
 # Entry point for the package
