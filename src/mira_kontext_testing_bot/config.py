@@ -22,6 +22,23 @@ class Settings(BaseSettings):
     kontext_api_url: str = Field(default="http://localhost:7070")
     kontext_token: str | None = Field(default=None)
 
+    # Retrieval transport: "mcp" (query_context over Streamable HTTP, the agent wire
+    # protocol per ADR 0005) or "rest" (POST /v1/query). MCP and REST share the same
+    # QueryService + ACL server-side, so results match; MCP is the production-parity path.
+    retrieval_transport: str = Field(default="mcp")  # mcp | rest
+    # Streamable-HTTP MCP endpoint (compose `mcp` service publishes 7072, path /mcp).
+    mcp_url: str = Field(default="http://localhost:7072/mcp")
+
+    # Reranking (precision stage between retrieval and answer). We retrieve a wide
+    # candidate set, then a listwise LLM reranker re-scores by text relevance and we
+    # keep the top-K — this fixes "loads everything" even when vector recall is weak.
+    rerank_enabled: bool = Field(default=True)
+    rerank_candidates: int = Field(default=20)  # how many to retrieve before reranking
+    rerank_top_k: int = Field(default=5)  # how many to keep after reranking
+    rerank_min_score: float = Field(default=0.0)  # drop candidates below this (0..1)
+    rerank_model: str | None = Field(default=None)  # defaults to llm_model (gpt-oss-120b)
+    rerank_timeout: float = Field(default=20.0)
+
     # Bot Identity
     bot_principal_id: str = Field(default="testing-bot")
     bot_display_name: str = Field(default="Mira Kontext Testing Bot")

@@ -21,6 +21,7 @@ anyio = "^4.0.0"
 firecrawl-py = "^1.15.0"
 repl-toolkit = { path = "../repl-toolkit", develop = true }
 openai = "^2.37.0"
+mcp = "^1.2.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.0"

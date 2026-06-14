@@ -7845,3 +7845,2812 @@ Payload:
   }
 }
 --------------------------------------------------------------------------------
+2026-06-14 20:23:21,656 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '144'}
+Payload:
+{
+  "query": "hello hello",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 8
+}
+2026-06-14 20:23:21,673 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "d8042641-f9ee-4153-bfc2-a3106f3cdb79",
+  "items": [],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 6,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:24:40,402 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '144'}
+Payload:
+{
+  "query": "hello hello",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 8
+}
+2026-06-14 20:24:40,434 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "dfdf7758-bc75-4a13-bd46-4ce5d8acc494",
+  "items": [],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 6,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:25:09,208 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '144'}
+Payload:
+{
+  "query": "hello hello",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 8
+}
+2026-06-14 20:25:09,241 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "d9a85e9b-03c8-428c-a8d2-8e99620a3910",
+  "items": [
+    {
+      "content_item_id": "bd84f498-3f23-4dc1-abfc-1aefbf626069",
+      "short_id": "src-caab41d256604a50",
+      "title": "hello hello",
+      "snippet": "hello hello we need to have a conversation",
+      "score": 0.7501962813979145,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "subject": "hello hello",
+        "checksum": "37955af31febf27df90ab9ef85dfe9e4ec5df3e3f9c8cfb8c532989a9aa52e68",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214467106",
+        "source_object_type": "channel_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "f2f3e56c-3891-4af1-81e2-e3d28938bd28",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "channel_message",
+          "source_object_id": "1781214467106",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "a48a87d2-2929-4b5b-a6be-e9ab0f13a282",
+      "short_id": "src-54299f48f7bc4a5b",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "where are the Bahama mamas. ?",
+      "score": 0.7547192658897237,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "67b925fd6f24837d0157274f8f0a802b1101c53ba80a99a4954f33edddf7358c",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214567942",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "aacfa3fa-7fc7-4491-ab7c-7887064266cb",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214567942",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "993194a8-85a2-471b-8baa-abede96a9247",
+      "short_id": "src-506115be9c214122",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "hi",
+      "score": 0.7510326588458716,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "e90cbb720fa7da03f5883f6d54fe32dd25dc2c1ca8e7664707992d12ee6d2eba",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214501774",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "04b9be08-406f-4e13-ac01-85debe947753",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214501774",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "0532b20c-d4fc-45c1-b249-dffa38a4e5ea",
+      "short_id": "src-7f9b31976f1642c9",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "how are you ?",
+      "score": 0.7507774870825529,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "f4ac2ad1cebfd8747962de642d224df917018eace6db15d0e29f9f0b6f53c628",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214516157",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "8d7ceb44-ec5d-4e2c-9b32-597bdc17052f",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214516157",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "9e6f869b-137c-4072-8d00-4b6424512a01",
+      "short_id": "src-a466bad5bab64267",
+      "title": null,
+      "snippet": "{\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:channel:65f7904b-f2d3-4231-ba99-43189b6a0cc0:19:7VEoU22WlX_KA6jsgZXydcft9uEF9RcPVV3iU-GVTUI1@thread.tacv2\",\"content\":\"\",\"metadata\":{\"...",
+      "score": 0.7442645786891279,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "checksum": "345ca0ad2946c5bb6a63c8b1284515794478687cec194cc361902160de1b18ff",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781202691825",
+        "source_object_type": "channel_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "040cb904-2d57-4515-8475-1768863b8d66",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "channel_message",
+          "source_object_id": "1781202691825",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "b4becd23-3634-450a-b11a-97f170bb1500",
+      "short_id": "src-17a1878d482f4fa2",
+      "title": null,
+      "snippet": "{\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:chat:19:01dd8ad7-ea1b-4ab1-b43b-8d07342d6100_bfffc8cb-c6a3-4242-8ca1-5e89320420f4@unq.gbl.spaces\",\"content\":\"\",\"metadata\":{\"content_k...",
+      "score": 0.7426991472840054,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "checksum": "e8755a01f30ba565360d38ef316245475bb2b7a6102bc080cc731e4817bd74af",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214501530",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "ea727a54-878f-4782-8401-ee33ef837a6f",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214501530",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    }
+  ],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 0,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:25:34,208 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '144'}
+Payload:
+{
+  "query": "hello hello",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 8
+}
+2026-06-14 20:25:34,240 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "75bde00d-7247-45ea-b6a3-ca4cd0514759",
+  "items": [
+    {
+      "content_item_id": "bd84f498-3f23-4dc1-abfc-1aefbf626069",
+      "short_id": "src-caab41d256604a50",
+      "title": "hello hello",
+      "snippet": "hello hello we need to have a conversation",
+      "score": 0.7501962813979145,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "subject": "hello hello",
+        "checksum": "37955af31febf27df90ab9ef85dfe9e4ec5df3e3f9c8cfb8c532989a9aa52e68",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214467106",
+        "source_object_type": "channel_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "f2f3e56c-3891-4af1-81e2-e3d28938bd28",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "channel_message",
+          "source_object_id": "1781214467106",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "a48a87d2-2929-4b5b-a6be-e9ab0f13a282",
+      "short_id": "src-54299f48f7bc4a5b",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "where are the Bahama mamas. ?",
+      "score": 0.7547192658897237,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "67b925fd6f24837d0157274f8f0a802b1101c53ba80a99a4954f33edddf7358c",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214567942",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "aacfa3fa-7fc7-4491-ab7c-7887064266cb",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214567942",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "993194a8-85a2-471b-8baa-abede96a9247",
+      "short_id": "src-506115be9c214122",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "hi",
+      "score": 0.7510326588458716,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "e90cbb720fa7da03f5883f6d54fe32dd25dc2c1ca8e7664707992d12ee6d2eba",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214501774",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "04b9be08-406f-4e13-ac01-85debe947753",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214501774",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "0532b20c-d4fc-45c1-b249-dffa38a4e5ea",
+      "short_id": "src-7f9b31976f1642c9",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "how are you ?",
+      "score": 0.7507774870825529,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "f4ac2ad1cebfd8747962de642d224df917018eace6db15d0e29f9f0b6f53c628",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214516157",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "8d7ceb44-ec5d-4e2c-9b32-597bdc17052f",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214516157",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "9e6f869b-137c-4072-8d00-4b6424512a01",
+      "short_id": "src-a466bad5bab64267",
+      "title": null,
+      "snippet": "{\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:channel:65f7904b-f2d3-4231-ba99-43189b6a0cc0:19:7VEoU22WlX_KA6jsgZXydcft9uEF9RcPVV3iU-GVTUI1@thread.tacv2\",\"content\":\"\",\"metadata\":{\"...",
+      "score": 0.7442645786891279,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "checksum": "345ca0ad2946c5bb6a63c8b1284515794478687cec194cc361902160de1b18ff",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781202691825",
+        "source_object_type": "channel_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "040cb904-2d57-4515-8475-1768863b8d66",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "channel_message",
+          "source_object_id": "1781202691825",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "b4becd23-3634-450a-b11a-97f170bb1500",
+      "short_id": "src-17a1878d482f4fa2",
+      "title": null,
+      "snippet": "{\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:chat:19:01dd8ad7-ea1b-4ab1-b43b-8d07342d6100_bfffc8cb-c6a3-4242-8ca1-5e89320420f4@unq.gbl.spaces\",\"content\":\"\",\"metadata\":{\"content_k...",
+      "score": 0.7426991472840054,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "checksum": "e8755a01f30ba565360d38ef316245475bb2b7a6102bc080cc731e4817bd74af",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214501530",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "ea727a54-878f-4782-8401-ee33ef837a6f",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214501530",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    }
+  ],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 0,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:26:45,707 - DEBUG - --> Request: GET http://localhost:7070/health
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:26:45,716 - DEBUG - <-- Response: GET http://localhost:7070/health - Status 200
+Payload:
+{
+  "status": "ok"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:26:45,716 - DEBUG - --> Request: GET http://localhost:7070/ready
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:26:45,719 - DEBUG - <-- Response: GET http://localhost:7070/ready - Status 200
+Payload:
+{
+  "status": "ok",
+  "checks": {
+    "database": "ok",
+    "embedding": "ok:stub"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:27:33,759 - DEBUG - --> Request: GET http://localhost:7070/health
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:27:33,767 - DEBUG - <-- Response: GET http://localhost:7070/health - Status 200
+Payload:
+{
+  "status": "ok"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:27:33,768 - DEBUG - --> Request: GET http://localhost:7070/ready
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:27:33,771 - DEBUG - <-- Response: GET http://localhost:7070/ready - Status 200
+Payload:
+{
+  "status": "ok",
+  "checks": {
+    "database": "ok",
+    "embedding": "ok:stub"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:27:35,503 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '341'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "hi",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 20:27:35,513 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 403
+Payload:
+{
+  "error": "auth.missing_scope",
+  "message": "Missing required scope: memory:write",
+  "request_id": "6af5c8f9-0e8f-4075-9fd5-a9472395b3dc",
+  "details": {
+    "required_scope": "memory:write"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:33:00,958 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '343'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "exit",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 20:34:22,160 - DEBUG - --> Request: GET http://localhost:7070/health
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:34:22,169 - DEBUG - <-- Response: GET http://localhost:7070/health - Status 200
+Payload:
+{
+  "status": "ok"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:34:22,170 - DEBUG - --> Request: GET http://localhost:7070/ready
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:34:22,174 - DEBUG - <-- Response: GET http://localhost:7070/ready - Status 200
+Payload:
+{
+  "status": "ok",
+  "checks": {
+    "database": "ok",
+    "embedding": "ok:stub"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:34:23,675 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '341'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "hi",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 20:34:23,697 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "55dfd042-5f75-4b62-8649-20c2863ef30f",
+  "content_item_id": "bc21c47f-ad27-48d6-a18f-a1302721c386",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T20:34:23.684148Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:34:24,249 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer replace-with-nebius-key', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '8.0', 'content-length': '1184'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify the user's raw message for a testing bot.\nReturn only compact JSON with these fields:\nintent: one of chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search.\nconfidence: number from 0 to 1.\ntitle, content, query, short_id, source_system, source_object_type, source_object_id,\ncollection_external_id: optional strings or null.\n\nRules:\n- Use ingest_source only when the user explicitly asks to ingest, store, save, add, upload, or\n  index content into the knowledge base. Include the exact content to store.\n- Use chat when the user asks to draft, discuss, explain, or prepare content without explicitly\n  asking to write it.\n- Use web_search when the user explicitly asks for online research, web search, crawling, or\n  fetching internet sources. Put the best search string in query.\n- Do not infer actions from previous messages or external context.\n- For private/default ingest, set collection_external_id to null.\n- Prefer safe chat fallback when uncertain.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "hi"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 350,
+  "temperature": 0
+}
+2026-06-14 20:34:24,665 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 401
+Payload:
+{
+  "detail": "Couldn't authenticate. Reason: Unable authenticate"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:35:42,347 - DEBUG - --> Request: GET http://localhost:7070/health
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:35:42,355 - DEBUG - <-- Response: GET http://localhost:7070/health - Status 200
+Payload:
+{
+  "status": "ok"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:35:42,355 - DEBUG - --> Request: GET http://localhost:7070/ready
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:35:42,359 - DEBUG - <-- Response: GET http://localhost:7070/ready - Status 200
+Payload:
+{
+  "status": "ok",
+  "checks": {
+    "database": "ok",
+    "embedding": "ok:stub"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:35:43,894 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '341'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "hi",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 20:35:43,915 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "6235ff39-3740-41e0-91f0-07753ef2b0ed",
+  "content_item_id": "e78a49e3-be29-4c4f-9575-566f885ca7e1",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T20:35:43.904304Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:35:44,189 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '8.0', 'content-length': '1184'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify the user's raw message for a testing bot.\nReturn only compact JSON with these fields:\nintent: one of chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search.\nconfidence: number from 0 to 1.\ntitle, content, query, short_id, source_system, source_object_type, source_object_id,\ncollection_external_id: optional strings or null.\n\nRules:\n- Use ingest_source only when the user explicitly asks to ingest, store, save, add, upload, or\n  index content into the knowledge base. Include the exact content to store.\n- Use chat when the user asks to draft, discuss, explain, or prepare content without explicitly\n  asking to write it.\n- Use web_search when the user explicitly asks for online research, web search, crawling, or\n  fetching internet sources. Put the best search string in query.\n- Do not infer actions from previous messages or external context.\n- For private/default ingest, set collection_external_id to null.\n- Prefer safe chat fallback when uncertain.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "hi"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 350,
+  "temperature": 0
+}
+2026-06-14 20:35:50,522 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-aa42f08dfa8b2e5b",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"intent\": \"chat\",\n  \"confidence\": 1.0,\n  \"title\": null,\n  \"content\": null,\n  \"query\": null,\n  \"short_id\": null,\n  \"source_system\": null,\n  \"source_object_type\": null,\n  \"source_object_id\": null,\n  \"collection_external_id\": null\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "User says \"hi\". That's a greeting, likely chat. Intent chat. Confidence high. No other fields needed. Return JSON with intent chat, confidence 1.0, other fields null."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781469349,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 123,
+    "prompt_tokens": 286,
+    "total_tokens": 409,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 64
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:35:50,531 - DEBUG - --> Request: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:35:50,541 - DEBUG - <-- Response: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot - Status 200
+Payload:
+{
+  "messages": [
+    {
+      "message_id": "55dfd042-5f75-4b62-8649-20c2863ef30f",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "hi",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T20:34:23.684148Z"
+    },
+    {
+      "message_id": "6235ff39-3740-41e0-91f0-07753ef2b0ed",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "hi",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T20:35:43.904304Z"
+    }
+  ],
+  "summaries": []
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:35:50,542 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '308'}
+Payload:
+{
+  "query": "hi",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 5,
+  "content_kinds": [
+    "source_record"
+  ],
+  "memory": {
+    "project_external_id": "default-test-project",
+    "session_external_id": "default-test-session",
+    "principal_external_id": "testing-bot"
+  }
+}
+2026-06-14 20:35:50,556 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "02ff1605-88d1-4eea-8fc5-2ab265fa2e65",
+  "items": [
+    {
+      "content_item_id": "993194a8-85a2-471b-8baa-abede96a9247",
+      "short_id": "src-506115be9c214122",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "hi",
+      "score": 1.0,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "e90cbb720fa7da03f5883f6d54fe32dd25dc2c1ca8e7664707992d12ee6d2eba",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214501774",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "04b9be08-406f-4e13-ac01-85debe947753",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214501774",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "9e6f869b-137c-4072-8d00-4b6424512a01",
+      "short_id": "src-a466bad5bab64267",
+      "title": null,
+      "snippet": "{\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:channel:65f7904b-f2d3-4231-ba99-43189b6a0cc0:19:7VEoU22WlX_KA6jsgZXydcft9uEF9RcPVV3iU-GVTUI1@thread.tacv2\",\"content\":\"\",\"metadata\":{\"...",
+      "score": 0.7492657100715657,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "checksum": "345ca0ad2946c5bb6a63c8b1284515794478687cec194cc361902160de1b18ff",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781202691825",
+        "source_object_type": "channel_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "040cb904-2d57-4515-8475-1768863b8d66",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "channel_message",
+          "source_object_id": "1781202691825",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "a48a87d2-2929-4b5b-a6be-e9ab0f13a282",
+      "short_id": "src-54299f48f7bc4a5b",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "where are the Bahama mamas. ?",
+      "score": 0.7452841855412454,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "67b925fd6f24837d0157274f8f0a802b1101c53ba80a99a4954f33edddf7358c",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214567942",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "aacfa3fa-7fc7-4491-ab7c-7887064266cb",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214567942",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "0532b20c-d4fc-45c1-b249-dffa38a4e5ea",
+      "short_id": "src-7f9b31976f1642c9",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "how are you ?",
+      "score": 0.7437899052248276,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "f4ac2ad1cebfd8747962de642d224df917018eace6db15d0e29f9f0b6f53c628",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214516157",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "8d7ceb44-ec5d-4e2c-9b32-597bdc17052f",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214516157",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "bd84f498-3f23-4dc1-abfc-1aefbf626069",
+      "short_id": "src-caab41d256604a50",
+      "title": "hello hello",
+      "snippet": "hello hello we need to have a conversation",
+      "score": 0.7407484473324112,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "subject": "hello hello",
+        "checksum": "37955af31febf27df90ab9ef85dfe9e4ec5df3e3f9c8cfb8c532989a9aa52e68",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214467106",
+        "source_object_type": "channel_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "f2f3e56c-3891-4af1-81e2-e3d28938bd28",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "channel_message",
+          "source_object_id": "1781214467106",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    }
+  ],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 0,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:35:50,560 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '30.0', 'content-length': '1562'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the conversational response layer for the Mira Kontext Testing Bot. The surrounding bot can store sources, query memory, list sources, retrieve documents, and fetch or search web pages through API actions before you are called. Do not claim that the bot has no ingest endpoints, APIs, storage access, or web fetch capability. If an API action has already been completed, summarize only the action result provided by the bot. If the user asks for web research and no web action has been run yet, explicitly suggest using /search-web <query> or /crawl <url>. Answer using the retrieved context and conversation history. Be concise and clear."
+    },
+    {
+      "role": "system",
+      "content": "Retrieved context:\n## Relevant Sources\n1. Teams message from Lukas Beckenbauer\n   hi\n2. Untitled\n   {\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:channel:65f7904b-f2d3-4231-ba99-43189b6a0cc0:19:7VEoU22WlX_KA6jsgZXydcft9uEF9RcPVV3iU-GVTUI1@thread.tacv2\",\"content\":\"\",\"metadata\":{\"...\n3. Teams message from Lukas Beckenbauer\n   where are the Bahama mamas. ?\n4. Teams message from Lukas Beckenbauer\n   how are you ?\n5. hello hello\n   hello hello we need to have a conversation"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "hi"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 1000,
+  "temperature": 0.7
+}
+2026-06-14 20:36:01,470 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-b6a16cf3fe772148",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "Hello! How can I help you today?",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "We have a repeated \"hi\". The context shows Teams messages from Lukas Beckenbauer with content \"hi\". Probably the user wants to respond. We should respond politely. No need for external data."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781469361,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 59,
+    "prompt_tokens": 402,
+    "total_tokens": 461,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 64
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:36:01,472 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '393'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "assistant",
+  "content": "Hello! How can I help you today?",
+  "metadata": {
+    "used_context": 5,
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 20:36:01,493 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "6ba39e67-86d3-4737-a064-f7ca3491d76a",
+  "content_item_id": "cf72c044-e6c7-4026-80ef-438b6888493d",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T20:36:01.483226Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:36:11,901 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '367'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "where are hte bahama mamas ?",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 20:36:11,923 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "6613dffd-f0ae-42b2-9603-ed7f871e72c6",
+  "content_item_id": "2d6c19e9-a3cb-4a38-830a-0d81a5d3eca4",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T20:36:11.913505Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:36:11,927 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '8.0', 'content-length': '1210'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify the user's raw message for a testing bot.\nReturn only compact JSON with these fields:\nintent: one of chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search.\nconfidence: number from 0 to 1.\ntitle, content, query, short_id, source_system, source_object_type, source_object_id,\ncollection_external_id: optional strings or null.\n\nRules:\n- Use ingest_source only when the user explicitly asks to ingest, store, save, add, upload, or\n  index content into the knowledge base. Include the exact content to store.\n- Use chat when the user asks to draft, discuss, explain, or prepare content without explicitly\n  asking to write it.\n- Use web_search when the user explicitly asks for online research, web search, crawling, or\n  fetching internet sources. Put the best search string in query.\n- Do not infer actions from previous messages or external context.\n- For private/default ingest, set collection_external_id to null.\n- Prefer safe chat fallback when uncertain.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "where are hte bahama mamas ?"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 350,
+  "temperature": 0
+}
+2026-06-14 20:36:20,399 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '1', 'x-stainless-read-timeout': '8.0', 'content-length': '1210'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify the user's raw message for a testing bot.\nReturn only compact JSON with these fields:\nintent: one of chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search.\nconfidence: number from 0 to 1.\ntitle, content, query, short_id, source_system, source_object_type, source_object_id,\ncollection_external_id: optional strings or null.\n\nRules:\n- Use ingest_source only when the user explicitly asks to ingest, store, save, add, upload, or\n  index content into the knowledge base. Include the exact content to store.\n- Use chat when the user asks to draft, discuss, explain, or prepare content without explicitly\n  asking to write it.\n- Use web_search when the user explicitly asks for online research, web search, crawling, or\n  fetching internet sources. Put the best search string in query.\n- Do not infer actions from previous messages or external context.\n- For private/default ingest, set collection_external_id to null.\n- Prefer safe chat fallback when uncertain.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "where are hte bahama mamas ?"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 350,
+  "temperature": 0
+}
+2026-06-14 20:36:29,344 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '2', 'x-stainless-read-timeout': '8.0', 'content-length': '1210'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify the user's raw message for a testing bot.\nReturn only compact JSON with these fields:\nintent: one of chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search.\nconfidence: number from 0 to 1.\ntitle, content, query, short_id, source_system, source_object_type, source_object_id,\ncollection_external_id: optional strings or null.\n\nRules:\n- Use ingest_source only when the user explicitly asks to ingest, store, save, add, upload, or\n  index content into the knowledge base. Include the exact content to store.\n- Use chat when the user asks to draft, discuss, explain, or prepare content without explicitly\n  asking to write it.\n- Use web_search when the user explicitly asks for online research, web search, crawling, or\n  fetching internet sources. Put the best search string in query.\n- Do not infer actions from previous messages or external context.\n- For private/default ingest, set collection_external_id to null.\n- Prefer safe chat fallback when uncertain.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "where are hte bahama mamas ?"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 350,
+  "temperature": 0
+}
+2026-06-14 20:36:35,099 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-ad2660297025ee1e",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"intent\": \"chat\",\n  \"confidence\": 0.97,\n  \"title\": null,\n  \"content\": null,\n  \"query\": null,\n  \"short_id\": null,\n  \"source_system\": null,\n  \"source_object_type\": null,\n  \"source_object_id\": null,\n  \"collection_external_id\": null\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "We need to classify the user's raw message. The user says: \"where are hte bahama mamas ?\" This is a question asking location of \"the Bahama Mamas\". Likely they want info. This is a query, not ingest, not web search unless they explicitly ask to search the web. They ask \"where are\". Could be answered via chat (knowledge). According to intents: chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search. There's no \"search\" intent besides web_search. \"query_sources\" is for querying stored sources? Not relevant. So we choose chat. Confidence high. Provide JSON. No extra fields needed? Must include fields: intent, confidence, title, content, query, short_id, source_system, source_object_type, source_object_id, collection_external_id. For chat, likely only intent and confidence needed; other fields can be null. Provide null for others."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781469392,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 277,
+    "prompt_tokens": 294,
+    "total_tokens": 571,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 288
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:36:35,100 - DEBUG - --> Request: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:36:35,106 - DEBUG - <-- Response: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot - Status 200
+Payload:
+{
+  "messages": [
+    {
+      "message_id": "55dfd042-5f75-4b62-8649-20c2863ef30f",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "hi",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T20:34:23.684148Z"
+    },
+    {
+      "message_id": "6235ff39-3740-41e0-91f0-07753ef2b0ed",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "hi",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T20:35:43.904304Z"
+    },
+    {
+      "message_id": "6ba39e67-86d3-4737-a064-f7ca3491d76a",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "assistant",
+      "content": "Hello! How can I help you today?",
+      "metadata": {
+        "stored_by": "testing_bot",
+        "used_context": 5
+      },
+      "created_at": "2026-06-14T20:36:01.483226Z"
+    },
+    {
+      "message_id": "6613dffd-f0ae-42b2-9603-ed7f871e72c6",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "where are hte bahama mamas ?",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T20:36:11.913505Z"
+    }
+  ],
+  "summaries": []
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:36:35,107 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '334'}
+Payload:
+{
+  "query": "where are hte bahama mamas ?",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 5,
+  "content_kinds": [
+    "source_record"
+  ],
+  "memory": {
+    "project_external_id": "default-test-project",
+    "session_external_id": "default-test-session",
+    "principal_external_id": "testing-bot"
+  }
+}
+2026-06-14 20:36:35,119 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "2fb2d6d4-8ecf-4f97-93ad-3f29fbae3f28",
+  "items": [
+    {
+      "content_item_id": "bd84f498-3f23-4dc1-abfc-1aefbf626069",
+      "short_id": "src-caab41d256604a50",
+      "title": "hello hello",
+      "snippet": "hello hello we need to have a conversation",
+      "score": 0.7507658887942087,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "subject": "hello hello",
+        "checksum": "37955af31febf27df90ab9ef85dfe9e4ec5df3e3f9c8cfb8c532989a9aa52e68",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214467106",
+        "source_object_type": "channel_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "f2f3e56c-3891-4af1-81e2-e3d28938bd28",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "channel_message",
+          "source_object_id": "1781214467106",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "993194a8-85a2-471b-8baa-abede96a9247",
+      "short_id": "src-506115be9c214122",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "hi",
+      "score": 0.7420352664342913,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "e90cbb720fa7da03f5883f6d54fe32dd25dc2c1ca8e7664707992d12ee6d2eba",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214501774",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "04b9be08-406f-4e13-ac01-85debe947753",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214501774",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "9e6f869b-137c-4072-8d00-4b6424512a01",
+      "short_id": "src-a466bad5bab64267",
+      "title": null,
+      "snippet": "{\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:channel:65f7904b-f2d3-4231-ba99-43189b6a0cc0:19:7VEoU22WlX_KA6jsgZXydcft9uEF9RcPVV3iU-GVTUI1@thread.tacv2\",\"content\":\"\",\"metadata\":{\"...",
+      "score": 0.7398817582534675,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "checksum": "345ca0ad2946c5bb6a63c8b1284515794478687cec194cc361902160de1b18ff",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781202691825",
+        "source_object_type": "channel_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "040cb904-2d57-4515-8475-1768863b8d66",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "channel_message",
+          "source_object_id": "1781202691825",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "0532b20c-d4fc-45c1-b249-dffa38a4e5ea",
+      "short_id": "src-7f9b31976f1642c9",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "how are you ?",
+      "score": 0.7389929886106638,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "f4ac2ad1cebfd8747962de642d224df917018eace6db15d0e29f9f0b6f53c628",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214516157",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "8d7ceb44-ec5d-4e2c-9b32-597bdc17052f",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214516157",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    },
+    {
+      "content_item_id": "a48a87d2-2929-4b5b-a6be-e9ab0f13a282",
+      "short_id": "src-54299f48f7bc4a5b",
+      "title": "Teams message from Lukas Beckenbauer",
+      "snippet": "where are the Bahama mamas. ?",
+      "score": 0.730200677539643,
+      "metadata": {
+        "acl": {
+          "visibility": "internal",
+          "denied_roles": [],
+          "allowed_roles": [],
+          "allowed_groups": [],
+          "permission_status": "known",
+          "allowed_principals": []
+        },
+        "author": "Lukas Beckenbauer",
+        "checksum": "67b925fd6f24837d0157274f8f0a802b1101c53ba80a99a4954f33edddf7358c",
+        "source_url": null,
+        "content_kind": "message",
+        "source_system": "microsoft-teams",
+        "source_version": null,
+        "source_object_id": "1781214567942",
+        "source_object_type": "chat_message",
+        "collection_external_id": "connector-6a2e66e6c09e058b3654a82c"
+      },
+      "citations": [
+        {
+          "source_record_id": "aacfa3fa-7fc7-4491-ab7c-7887064266cb",
+          "collection_external_id": "connector-6a2e66e6c09e058b3654a82c",
+          "source_system": "microsoft-teams",
+          "source_object_type": "chat_message",
+          "source_object_id": "1781214567942",
+          "source_version": null,
+          "source_url": null
+        }
+      ],
+      "related_items": []
+    }
+  ],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 0,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:36:35,126 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '30.0', 'content-length': '1711'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the conversational response layer for the Mira Kontext Testing Bot. The surrounding bot can store sources, query memory, list sources, retrieve documents, and fetch or search web pages through API actions before you are called. Do not claim that the bot has no ingest endpoints, APIs, storage access, or web fetch capability. If an API action has already been completed, summarize only the action result provided by the bot. If the user asks for web research and no web action has been run yet, explicitly suggest using /search-web <query> or /crawl <url>. Answer using the retrieved context and conversation history. Be concise and clear."
+    },
+    {
+      "role": "system",
+      "content": "Retrieved context:\n## Relevant Sources\n1. hello hello\n   hello hello we need to have a conversation\n2. Teams message from Lukas Beckenbauer\n   hi\n3. Untitled\n   {\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:channel:65f7904b-f2d3-4231-ba99-43189b6a0cc0:19:7VEoU22WlX_KA6jsgZXydcft9uEF9RcPVV3iU-GVTUI1@thread.tacv2\",\"content\":\"\",\"metadata\":{\"...\n4. Teams message from Lukas Beckenbauer\n   how are you ?\n5. Teams message from Lukas Beckenbauer\n   where are the Bahama mamas. ?"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Hello! How can I help you today?"
+    },
+    {
+      "role": "user",
+      "content": "where are hte bahama mamas ?"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "where are hte bahama mamas ?"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 1000,
+  "temperature": 0.7
+}
+2026-06-14 20:36:36,280 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-a5860380d3b84ab9",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "I don\u2019t have any information about the \u201cBahama mamas\u201d in the current context. Would you like me to look it up on the web? You can trigger a search with something like:\n\n```\n/search-web Bahama mamas location\n```",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "The user asks: \"where are the bahama mamas ?\" There's a source #5: Teams message from Lukas Beckenbauer: \"where are the Bahama mamas. ?\" That's just the same question. No answer provided. We need to respond. We could ask for clarification. Possibly answer we don't have info. Could suggest searching web. So we should suggest using /search-web query \"Bahama mamas location\". Provide answer: we don't have info. Suggest web search."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781469395,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 160,
+    "prompt_tokens": 439,
+    "total_tokens": 599,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 192
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:36:36,282 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '581'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "assistant",
+  "content": "I don\u2019t have any information about the \u201cBahama mamas\u201d in the current context. Would you like me to look it up on the web? You can trigger a search with something like:\n\n```\n/search-web Bahama mamas location\n```",
+  "metadata": {
+    "used_context": 5,
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 20:36:36,299 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "554d9cd7-ccbf-4a6b-8646-3ad5908e62ad",
+  "content_item_id": "f0a82e3c-9bfe-481f-a03f-53bad1fa4581",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T20:36:36.290757Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:01,926 - DEBUG - --> Request: GET http://localhost:7070/health
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 21:04:01,935 - DEBUG - <-- Response: GET http://localhost:7070/health - Status 200
+Payload:
+{
+  "status": "ok"
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:01,935 - DEBUG - --> Request: GET http://localhost:7070/ready
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 21:04:02,115 - DEBUG - <-- Response: GET http://localhost:7070/ready - Status 200
+Payload:
+{
+  "status": "ok",
+  "checks": {
+    "database": "ok",
+    "embedding": "ok:nebius"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:03,999 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '341'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "hi",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 21:04:04,149 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "8207da47-92bd-4ad5-81a9-9105bc97e357",
+  "content_item_id": "cb5a2995-98f6-43e5-8f47-f244890e7433",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T21:04:04.011253Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:04,428 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '8.0', 'content-length': '1184'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify the user's raw message for a testing bot.\nReturn only compact JSON with these fields:\nintent: one of chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search.\nconfidence: number from 0 to 1.\ntitle, content, query, short_id, source_system, source_object_type, source_object_id,\ncollection_external_id: optional strings or null.\n\nRules:\n- Use ingest_source only when the user explicitly asks to ingest, store, save, add, upload, or\n  index content into the knowledge base. Include the exact content to store.\n- Use chat when the user asks to draft, discuss, explain, or prepare content without explicitly\n  asking to write it.\n- Use web_search when the user explicitly asks for online research, web search, crawling, or\n  fetching internet sources. Put the best search string in query.\n- Do not infer actions from previous messages or external context.\n- For private/default ingest, set collection_external_id to null.\n- Prefer safe chat fallback when uncertain.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "hi"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 350,
+  "temperature": 0
+}
+2026-06-14 21:04:04,798 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-869612566f30240b",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"intent\": \"chat\",\n  \"confidence\": 0.99,\n  \"title\": null,\n  \"content\": null,\n  \"query\": null,\n  \"short_id\": null,\n  \"source_system\": null,\n  \"source_object_type\": null,\n  \"source_object_id\": null,\n  \"collection_external_id\": null\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "User says \"hi\". That's a greeting, likely chat. No request. So intent chat, confidence high. No other fields needed. Return JSON with fields. Provide null for optional strings."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781471044,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 122,
+    "prompt_tokens": 286,
+    "total_tokens": 408,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 64
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:04,812 - DEBUG - --> Request: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 21:04:04,826 - DEBUG - <-- Response: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot - Status 200
+Payload:
+{
+  "messages": [
+    {
+      "message_id": "6235ff39-3740-41e0-91f0-07753ef2b0ed",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "hi",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T20:35:43.904304Z"
+    },
+    {
+      "message_id": "6ba39e67-86d3-4737-a064-f7ca3491d76a",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "assistant",
+      "content": "Hello! How can I help you today?",
+      "metadata": {
+        "stored_by": "testing_bot",
+        "used_context": 5
+      },
+      "created_at": "2026-06-14T20:36:01.483226Z"
+    },
+    {
+      "message_id": "6613dffd-f0ae-42b2-9603-ed7f871e72c6",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "where are hte bahama mamas ?",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T20:36:11.913505Z"
+    },
+    {
+      "message_id": "554d9cd7-ccbf-4a6b-8646-3ad5908e62ad",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "assistant",
+      "content": "I don\u2019t have any information about the \u201cBahama mamas\u201d in the current context. Would you like me to look it up on the web? You can trigger a search with something like:\n\n```\n/search-web Bahama mamas location\n```",
+      "metadata": {
+        "stored_by": "testing_bot",
+        "used_context": 5
+      },
+      "created_at": "2026-06-14T20:36:36.290757Z"
+    },
+    {
+      "message_id": "8207da47-92bd-4ad5-81a9-9105bc97e357",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "hi",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T21:04:04.011253Z"
+    }
+  ],
+  "summaries": []
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:06,396 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '30.0', 'content-length': '2235'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the conversational response layer for the Mira Kontext Testing Bot. The surrounding bot can store sources, query memory, list sources, retrieve documents, and fetch or search web pages through API actions before you are called. Do not claim that the bot has no ingest endpoints, APIs, storage access, or web fetch capability. If an API action has already been completed, summarize only the action result provided by the bot. If the user asks for web research and no web action has been run yet, explicitly suggest using /search-web <query> or /crawl <url>. Answer using the retrieved context and conversation history. Be concise and clear."
+    },
+    {
+      "role": "system",
+      "content": "Retrieved context:\n## Relevant Sources\n1. Teams message from Lukas Beckenbauer\n   hi\n2. hello hello\n   hello hello we need to have a conversation\n3. Teams message from Lukas Beckenbauer\n   how are you ?\n4. Untitled\n   {\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:chat:19:01dd8ad7-ea1b-4ab1-b43b-8d07342d6100_bfffc8cb-c6a3-4242-8ca1-5e89320420f4@unq.gbl.spaces\",\"content\":\"\",\"metadata\":{\"content_k...\n5. Untitled\n   {\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:channel:65f7904b-f2d3-4231-ba99-43189b6a0cc0:19:7VEoU22WlX_KA6jsgZXydcft9uEF9RcPVV3iU-GVTUI1@thread.tacv2\",\"content\":\"\",\"metadata\":{\"..."
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Hello! How can I help you today?"
+    },
+    {
+      "role": "user",
+      "content": "where are hte bahama mamas ?"
+    },
+    {
+      "role": "assistant",
+      "content": "I don\u2019t have any information about the \u201cBahama mamas\u201d in the current context. Would you like me to look it up on the web? You can trigger a search with something like:\n\n```\n/search-web Bahama mamas location\n```"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "hi"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 1000,
+  "temperature": 0.7
+}
+2026-06-14 21:04:06,647 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-a43c20d7d7286266",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "Hi again! How can I assist you today?",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "The user says \"hi\" twice. Likely they want a response. We should respond politely."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781471046,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 40,
+    "prompt_tokens": 584,
+    "total_tokens": 624,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 64
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:06,651 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '398'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "assistant",
+  "content": "Hi again! How can I assist you today?",
+  "metadata": {
+    "used_context": 5,
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 21:04:06,782 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "d181f60f-e841-4f66-b3af-f840b5ebaa38",
+  "content_item_id": "9b9e96a3-1177-4c44-83df-c3eb472ab8bd",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T21:04:06.660354Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:24,619 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '387'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "what are my messages about ? and whats my name ?",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 21:04:24,930 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "b509bdd2-a0ea-400b-89b5-9925fe6a8d1f",
+  "content_item_id": "cce22148-0bf8-499f-9edd-0e998e6c960a",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T21:04:24.630529Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:24,933 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '8.0', 'content-length': '1230'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify the user's raw message for a testing bot.\nReturn only compact JSON with these fields:\nintent: one of chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search.\nconfidence: number from 0 to 1.\ntitle, content, query, short_id, source_system, source_object_type, source_object_id,\ncollection_external_id: optional strings or null.\n\nRules:\n- Use ingest_source only when the user explicitly asks to ingest, store, save, add, upload, or\n  index content into the knowledge base. Include the exact content to store.\n- Use chat when the user asks to draft, discuss, explain, or prepare content without explicitly\n  asking to write it.\n- Use web_search when the user explicitly asks for online research, web search, crawling, or\n  fetching internet sources. Put the best search string in query.\n- Do not infer actions from previous messages or external context.\n- For private/default ingest, set collection_external_id to null.\n- Prefer safe chat fallback when uncertain.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "what are my messages about ? and whats my name ?"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 350,
+  "temperature": 0
+}
+2026-06-14 21:04:25,876 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-a66d3e6c47fb8918",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"intent\": \"chat\",\n  \"confidence\": 0.99,\n  \"title\": null,\n  \"content\": null,\n  \"query\": null,\n  \"short_id\": null,\n  \"source_system\": null,\n  \"source_object_type\": null,\n  \"source_object_id\": null,\n  \"collection_external_id\": null\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "We need to classify the user's raw message. The user asks: \"what are my messages about ? and whats my name ?\" This is a question about their messages and name. This is not ingest, not query_sources, not list_sources, not get_document, not search_memory, not web_search. It's a chat request: they want info about their messages and name. So intent: chat. Confidence high. Provide JSON with fields: intent, confidence, title, content, query, short_id, source_system, source_object_type, source_object_id, collection_external_id. For chat, we can set other fields null. Title maybe null. content maybe null. Provide minimal."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781471065,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 220,
+    "prompt_tokens": 296,
+    "total_tokens": 516,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 272
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:25,877 - DEBUG - --> Request: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 21:04:25,888 - DEBUG - <-- Response: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot - Status 200
+Payload:
+{
+  "messages": [
+    {
+      "message_id": "6613dffd-f0ae-42b2-9603-ed7f871e72c6",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "where are hte bahama mamas ?",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T20:36:11.913505Z"
+    },
+    {
+      "message_id": "554d9cd7-ccbf-4a6b-8646-3ad5908e62ad",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "assistant",
+      "content": "I don\u2019t have any information about the \u201cBahama mamas\u201d in the current context. Would you like me to look it up on the web? You can trigger a search with something like:\n\n```\n/search-web Bahama mamas location\n```",
+      "metadata": {
+        "stored_by": "testing_bot",
+        "used_context": 5
+      },
+      "created_at": "2026-06-14T20:36:36.290757Z"
+    },
+    {
+      "message_id": "8207da47-92bd-4ad5-81a9-9105bc97e357",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "hi",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T21:04:04.011253Z"
+    },
+    {
+      "message_id": "d181f60f-e841-4f66-b3af-f840b5ebaa38",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "assistant",
+      "content": "Hi again! How can I assist you today?",
+      "metadata": {
+        "stored_by": "testing_bot",
+        "used_context": 5
+      },
+      "created_at": "2026-06-14T21:04:06.660354Z"
+    },
+    {
+      "message_id": "b509bdd2-a0ea-400b-89b5-9925fe6a8d1f",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "what are my messages about ? and whats my name ?",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T21:04:24.630529Z"
+    }
+  ],
+  "summaries": []
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:27,442 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '30.0', 'content-length': '2332'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the conversational response layer for the Mira Kontext Testing Bot. The surrounding bot can store sources, query memory, list sources, retrieve documents, and fetch or search web pages through API actions before you are called. Do not claim that the bot has no ingest endpoints, APIs, storage access, or web fetch capability. If an API action has already been completed, summarize only the action result provided by the bot. If the user asks for web research and no web action has been run yet, explicitly suggest using /search-web <query> or /crawl <url>. Answer using the retrieved context and conversation history. Be concise and clear."
+    },
+    {
+      "role": "system",
+      "content": "Retrieved context:\n## Relevant Sources\n1. hello hello\n   hello hello we need to have a conversation\n2. Teams message from Lukas Beckenbauer\n   how are you ?\n3. Teams message from Lukas Beckenbauer\n   hi\n4. Untitled\n   {\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:channel:65f7904b-f2d3-4231-ba99-43189b6a0cc0:19:7VEoU22WlX_KA6jsgZXydcft9uEF9RcPVV3iU-GVTUI1@thread.tacv2\",\"content\":\"\",\"metadata\":{\"...\n5. Untitled\n   {\"_kontext\":{\"acl\":{\"allowed_groups\":[],\"allowed_principals\":[],\"allowed_roles\":[],\"denied_roles\":[],\"permission_status\":\"known\",\"visibility\":\"internal\"},\"collection_external_id\":\"teams:chat:19:01dd8ad7-ea1b-4ab1-b43b-8d07342d6100_bfffc8cb-c6a3-4242-8ca1-5e89320420f4@unq.gbl.spaces\",\"content\":\"\",\"metadata\":{\"content_k..."
+    },
+    {
+      "role": "user",
+      "content": "where are hte bahama mamas ?"
+    },
+    {
+      "role": "assistant",
+      "content": "I don\u2019t have any information about the \u201cBahama mamas\u201d in the current context. Would you like me to look it up on the web? You can trigger a search with something like:\n\n```\n/search-web Bahama mamas location\n```"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi again! How can I assist you today?"
+    },
+    {
+      "role": "user",
+      "content": "what are my messages about ? and whats my name ?"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "what are my messages about ? and whats my name ?"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 1000,
+  "temperature": 0.7
+}
+2026-06-14 21:04:28,381 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-822b2cc08273ffd7",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "Based on the conversation history I can see only two messages from you (or on your behalf) in the Teams channel:\n\n1. \u201chow are you ?\u201d  \n2. \u201chi\u201d\n\nBoth are brief greetings/check\u2011ins, so the recent messages are essentially just saying hello and asking how things are.\n\nI don\u2019t have any record of a name associated with you in the current context, so I\u2019m not able to tell you your name. If you\u2019d like me to address you by a specific name, just let me know!",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "The user asks: \"what are my messages about ? and whats my name ?\" We need to look at retrieved context: messages from Lukas Beckenbauer: \"how are you ?\" and \"hi\". Also some untitled JSON contexts likely empty. So messages are short greetings. The user's name is not stored; we have no name. We can answer based on context: messages are greetings. Name unknown. We can ask for clarification."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781471067,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 204,
+    "prompt_tokens": 605,
+    "total_tokens": 809,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 192
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:04:28,383 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '835'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "assistant",
+  "content": "Based on the conversation history I can see only two messages from you (or on your behalf) in the Teams channel:\n\n1. \u201chow are you ?\u201d  \n2. \u201chi\u201d\n\nBoth are brief greetings/check\u2011ins, so the recent messages are essentially just saying hello and asking how things are.\n\nI don\u2019t have any record of a name associated with you in the current context, so I\u2019m not able to tell you your name. If you\u2019d like me to address you by a specific name, just let me know!",
+  "metadata": {
+    "used_context": 5,
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 21:04:28,579 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "42689447-aa15-4a2c-bad1-fdef6cd450eb",
+  "content_item_id": "5d435642-c5dc-4ddc-9ad6-b668a4f7e4a5",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T21:04:28.392411Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:13:40,893 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '344'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "clear",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 21:14:37,371 - DEBUG - --> Request: GET http://localhost:7070/health
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 21:14:37,379 - DEBUG - <-- Response: GET http://localhost:7070/health - Status 200
+Payload:
+{
+  "status": "ok"
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:14:37,380 - DEBUG - --> Request: GET http://localhost:7070/ready
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 21:14:37,563 - DEBUG - <-- Response: GET http://localhost:7070/ready - Status 200
+Payload:
+{
+  "status": "ok",
+  "checks": {
+    "database": "ok",
+    "embedding": "ok:nebius"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:15:05,352 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '366'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "user",
+  "content": "what is the context about ?",
+  "metadata": {
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 21:15:05,559 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "a587786e-2774-44d7-b186-e54198d0c089",
+  "content_item_id": "c51ac652-bdb4-46fe-9d4c-1c645d01f97d",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T21:15:05.364438Z"
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:15:05,833 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '8.0', 'content-length': '1209'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Classify the user's raw message for a testing bot.\nReturn only compact JSON with these fields:\nintent: one of chat, ingest_source, query_sources, list_sources, get_document, search_memory, web_search.\nconfidence: number from 0 to 1.\ntitle, content, query, short_id, source_system, source_object_type, source_object_id,\ncollection_external_id: optional strings or null.\n\nRules:\n- Use ingest_source only when the user explicitly asks to ingest, store, save, add, upload, or\n  index content into the knowledge base. Include the exact content to store.\n- Use chat when the user asks to draft, discuss, explain, or prepare content without explicitly\n  asking to write it.\n- Use web_search when the user explicitly asks for online research, web search, crawling, or\n  fetching internet sources. Put the best search string in query.\n- Do not infer actions from previous messages or external context.\n- For private/default ingest, set collection_external_id to null.\n- Prefer safe chat fallback when uncertain.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "what is the context about ?"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 350,
+  "temperature": 0
+}
+2026-06-14 21:15:06,692 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-b44c3d5a6298873e",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"intent\": \"chat\",\n  \"confidence\": 0.99,\n  \"title\": null,\n  \"content\": \"what is the context about ?\",\n  \"query\": null,\n  \"short_id\": null,\n  \"source_system\": null,\n  \"source_object_type\": null,\n  \"source_object_id\": null,\n  \"collection_external_id\": null\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "We need to classify the user's raw message. The user says: \"what is the context about ?\" This is a question asking for clarification. It's not a request to ingest, not a query to search memory, not a web search, not a request to list sources, not a request to get a document. It's a chat request: they want explanation. So intent: chat. Confidence high, maybe 0.99. Title, content, etc? For chat, we can include content maybe the user's message? The schema includes fields: title, content, query, short_id, source_system, source_object_type, source_object_id, collection_external_id. For chat, we likely fill content with the user's message. Title maybe null. query null. short_id null. source_system null. etc. Provide JSON.\n\nThus output: {\"intent\":\"chat\",\"confidence\":0.99,\"title\":null,\"content\":\"what is the context about ?\",\"query\":null,\"short_id\":null,\"source_system\":null,\"source_object_type\":null,\"source_object_id\":null,\"collection_external_id\":null}"
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781471705,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 313,
+    "prompt_tokens": 291,
+    "total_tokens": 604,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 64
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:15:06,706 - DEBUG - --> Request: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 21:15:06,719 - DEBUG - <-- Response: GET http://localhost:7070/v1/memory/recent?limit=5&project_external_id=default-test-project&session_external_id=default-test-session&principal_external_id=testing-bot - Status 200
+Payload:
+{
+  "messages": [
+    {
+      "message_id": "8207da47-92bd-4ad5-81a9-9105bc97e357",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "hi",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T21:04:04.011253Z"
+    },
+    {
+      "message_id": "d181f60f-e841-4f66-b3af-f840b5ebaa38",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "assistant",
+      "content": "Hi again! How can I assist you today?",
+      "metadata": {
+        "stored_by": "testing_bot",
+        "used_context": 5
+      },
+      "created_at": "2026-06-14T21:04:06.660354Z"
+    },
+    {
+      "message_id": "b509bdd2-a0ea-400b-89b5-9925fe6a8d1f",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "what are my messages about ? and whats my name ?",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T21:04:24.630529Z"
+    },
+    {
+      "message_id": "42689447-aa15-4a2c-bad1-fdef6cd450eb",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "assistant",
+      "content": "Based on the conversation history I can see only two messages from you (or on your behalf) in the Teams channel:\n\n1. \u201chow are you ?\u201d  \n2. \u201chi\u201d\n\nBoth are brief greetings/check\u2011ins, so the recent messages are essentially just saying hello and asking how things are.\n\nI don\u2019t have any record of a name associated with you in the current context, so I\u2019m not able to tell you your name. If you\u2019d like me to address you by a specific name, just let me know!",
+      "metadata": {
+        "stored_by": "testing_bot",
+        "used_context": 5
+      },
+      "created_at": "2026-06-14T21:04:28.392411Z"
+    },
+    {
+      "message_id": "a587786e-2774-44d7-b186-e54198d0c089",
+      "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+      "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+      "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+      "role": "user",
+      "content": "what is the context about ?",
+      "metadata": {
+        "stored_by": "testing_bot"
+      },
+      "created_at": "2026-06-14T21:15:05.364438Z"
+    }
+  ],
+  "summaries": []
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:15:08,346 - DEBUG - --> Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions
+Headers: {'host': 'api.tokenfactory.nebius.com', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'authorization': 'Bearer v1.CmQKHHN0YXRpY2tleS1lMDBreGQ0bThxNjFncWJuZ3gSIXNlcnZpY2VhY2NvdW50LWUwMHZ6MHl6NTk0bTB4ZHk1YTIMCNTNnNEGENKnw4gBOgwI09C0nAcQwPmK-wJAAloDZTAw.AAAAAAAAAAFVYsf5fHiRBJm_Z1baYog8--Y9j6IFOMdCSRWqnve618qJtqf-DexG2hj4VpBPYHpPrLRTzmhdKebTBc5KlsAI', 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'AsyncOpenAI/Python 2.41.1', 'x-stainless-lang': 'python', 'x-stainless-package-version': '2.41.1', 'x-stainless-os': 'Linux', 'x-stainless-arch': 'x64', 'x-stainless-runtime': 'CPython', 'x-stainless-runtime-version': '3.12.3', 'x-stainless-async': 'async:asyncio', 'x-stainless-retry-count': '0', 'x-stainless-read-timeout': '30.0', 'content-length': '1897'}
+Payload:
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the conversational response layer for the Mira Kontext Testing Bot. The surrounding bot can store sources, query memory, list sources, retrieve documents, and fetch or search web pages through API actions before you are called. Do not claim that the bot has no ingest endpoints, APIs, storage access, or web fetch capability. If an API action has already been completed, summarize only the action result provided by the bot. If the user asks for web research and no web action has been run yet, explicitly suggest using /search-web <query> or /crawl <url>. Answer using the retrieved context and conversation history. Be concise and clear."
+    },
+    {
+      "role": "system",
+      "content": "Retrieved context:\n## Relevant Sources\n1. Teams message from Lukas Beckenbauer\n   how are you ?\n2. Teams message from Lukas Beckenbauer\n   hi\n3. Teams message from Lukas Beckenbauer\n   where are the Bahama mamas. ?\n4. hello hello\n   hello hello we need to have a conversation"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi again! How can I assist you today?"
+    },
+    {
+      "role": "user",
+      "content": "what are my messages about ? and whats my name ?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on the conversation history I can see only two messages from you (or on your behalf) in the Teams channel:\n\n1. \u201chow are you ?\u201d  \n2. \u201chi\u201d\n\nBoth are brief greetings/check\u2011ins, so the recent messages are essentially just saying hello and asking how things are.\n\nI don\u2019t have any record of a name associated with you in the current context, so I\u2019m not able to tell you your name. If you\u2019d like me to address you by a specific name, just let me know!"
+    },
+    {
+      "role": "user",
+      "content": "what is the context about ?"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "what is the context about ?"
+        }
+      ]
+    }
+  ],
+  "model": "openai/gpt-oss-120b",
+  "max_tokens": 1000,
+  "temperature": 0.7
+}
+2026-06-14 21:15:09,133 - DEBUG - <-- Response: POST https://api.tokenfactory.nebius.com/v1/chat/completions - Status 200
+Payload:
+{
+  "id": "chatcmpl-b5b2d25a8bce6ac3",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "The current context is a short Teams chat involving\u202f**Lukas\u202fBeckenbauer**. The exchanged messages are mainly informal greetings and a light\u2011hearted query:\n\n| Message | Content |\n|---------|---------|\n| 1 | \u201chow are you ?\u201d |\n| 2 | \u201chi\u201d |\n| 3 | \u201cwhere are the Bahama mamas. ?\u201d |\n| 4 | \u201chello hello\u201d (a repeated greeting) |\n\nSo the conversation is essentially a brief, friendly check\u2011in with a playful question about \u201cthe Bahama mamas.\u201d No deeper business or technical topics have been introduced yet.",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": "User asks \"what is the context about ?\" They want to know what the overall context is. The retrieved sources show Teams messages from Lukas Beckenbauer: \"how are you ?\", \"hi\", \"where are the Bahama mamas. ?\" and \"hello hello\". So context appears to be a conversation with Lukas Beckenbauer on Teams, mostly greetings and a question about \"Bahama mamas\". Provide summary."
+      },
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "created": 1781471708,
+  "model": "openai/gpt-oss-120b",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 221,
+    "prompt_tokens": 437,
+    "total_tokens": 658,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 64
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}
+--------------------------------------------------------------------------------
+2026-06-14 21:15:09,136 - DEBUG - --> Request: POST http://localhost:7070/v1/memory/messages
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_W9DKsLWTBoKd4uL2_SsB2bTed6WpyG98gqjQlfzpNOY', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '896'}
+Payload:
+{
+  "project": {
+    "external_id": "default-test-project",
+    "title": "Default Test Project",
+    "metadata": {}
+  },
+  "session": {
+    "external_id": "default-test-session",
+    "title": "Default Test Session",
+    "metadata": {}
+  },
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot"
+  },
+  "role": "assistant",
+  "content": "The current context is a short Teams chat involving\u202f**Lukas\u202fBeckenbauer**. The exchanged messages are mainly informal greetings and a light\u2011hearted query:\n\n| Message | Content |\n|---------|---------|\n| 1 | \u201chow are you ?\u201d |\n| 2 | \u201chi\u201d |\n| 3 | \u201cwhere are the Bahama mamas. ?\u201d |\n| 4 | \u201chello hello\u201d (a repeated greeting) |\n\nSo the conversation is essentially a brief, friendly check\u2011in with a playful question about \u201cthe Bahama mamas.\u201d No deeper business or technical topics have been introduced yet.",
+  "metadata": {
+    "used_context": 4,
+    "stored_by": "testing_bot"
+  }
+}
+2026-06-14 21:15:09,275 - DEBUG - <-- Response: POST http://localhost:7070/v1/memory/messages - Status 201
+Payload:
+{
+  "message_id": "12b07b0e-2985-4432-9a73-393f2e9933c8",
+  "content_item_id": "17564bd4-0f6d-420d-b709-68682f5a2f15",
+  "project_id": "334d0b82-b6ad-48cd-9a72-024cce24b820",
+  "session_id": "a6d95787-4936-4709-b8f7-c361dc8391a4",
+  "principal_id": "f7d8bae1-a92c-40c1-99d5-0e7b52e0d625",
+  "created_at": "2026-06-14T21:15:09.143874Z"
+}
+--------------------------------------------------------------------------------

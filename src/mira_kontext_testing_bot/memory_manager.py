@@ -5,7 +5,10 @@ from __future__ import annotations
 from typing import Any
 
 from .client import KontextClient
+from .config import get_settings
+from .mcp_client import KontextMCPClient
 from .models import MemoryMessage, QueryResult
+from .reranker import Reranker
 from .session import ChatContext
 
 
@@ -14,6 +17,25 @@ class MemoryManager:
 
     def __init__(self, client: KontextClient) -> None:
         self.client = client
+        settings = get_settings()
+        self.transport = settings.retrieval_transport.lower()
+        # MCP client is built lazily-safely; only used when transport == "mcp".
+        self._mcp_client: KontextMCPClient | None = None
+        if self.transport == "mcp":
+            try:
+                self._mcp_client = KontextMCPClient()
+            except Exception:  # noqa: BLE001 - fall back to REST if MCP unconfigurable
+                self.transport = "rest"
+        self.rerank_enabled = settings.rerank_enabled
+        self.rerank_candidates = settings.rerank_candidates
+        self.rerank_top_k = settings.rerank_top_k
+        self._reranker = Reranker() if settings.rerank_enabled else None
+
+    def _retrieval_client(self) -> KontextClient | KontextMCPClient:
+        """The transport used for `query_context`/`POST /v1/query` (same contract)."""
+        if self.transport == "mcp" and self._mcp_client is not None:
+            return self._mcp_client
+        return self.client
 
     async def store_message(
         self,
@@ -73,7 +95,7 @@ class MemoryManager:
         """Execute a context query including conversation memory."""
         kinds = content_kinds or ["source_record", "conversation_message"]
 
-        return await self.client.query(
+        return await self._retrieval_client().query(
             query=query,
             principal=context.principal,
             limit=limit,
@@ -111,21 +133,38 @@ class MemoryManager:
             ]
 
         if include_sources:
-            # Query for relevant sources
+            # Retrieve a WIDE candidate set, then rerank down to top-K. With weak/stub
+            # embeddings the vector order is near-random, so we lean on the reranker for
+            # precision instead of trusting the retrieval score. When reranking is off we
+            # just retrieve `source_limit` directly.
+            retrieve_limit = (
+                max(self.rerank_candidates, source_limit)
+                if (self.rerank_enabled and self._reranker is not None)
+                else source_limit
+            )
             query_result = await self.query_with_memory(
                 query=query,
                 context=context,
-                limit=source_limit,
+                limit=retrieve_limit,
                 content_kinds=["source_record"],
             )
+
+            items = query_result.items
+            top_k = self.rerank_top_k if self.rerank_enabled else source_limit
+            if self.rerank_enabled and self._reranker is not None and items:
+                items = await self._reranker.rerank(query, items, top_k=top_k)
+            else:
+                items = items[:top_k]
+
             result["source_items"] = [
                 {
                     "title": item.title,
                     "snippet": item.snippet,
                     "short_id": item.short_id,
                     "citations": item.citations,
+                    "rerank_score": item.metadata.get("_rerank_score"),
                 }
-                for item in query_result.items
+                for item in items
             ]
             result["audit_id"] = str(query_result.audit_id)
 
@@ -166,7 +205,9 @@ class MemoryManager:
                 snippet = item.get("snippet", "")[:150]
                 if len(item.get("snippet", "")) > 150:
                     snippet += "..."
-                lines.append(f"  {i}. {title}")
+                score = item.get("rerank_score")
+                suffix = f"  (relevance {score:.2f})" if isinstance(score, (int, float)) else ""
+                lines.append(f"  {i}. {title}{suffix}")
                 lines.append(f"     {snippet}")
             lines.append("")
 
