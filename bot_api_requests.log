@@ -7677,3 +7677,171 @@ Payload:
   "created_at": "2026-05-17T12:14:28.202097Z"
 }
 --------------------------------------------------------------------------------
+2026-06-14 19:57:50,814 - DEBUG - --> Request: GET http://localhost:7070/health
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 19:57:50,843 - DEBUG - <-- Response: GET http://localhost:7070/health - Status 200
+Payload:
+{
+  "status": "ok"
+}
+--------------------------------------------------------------------------------
+2026-06-14 19:57:50,843 - DEBUG - --> Request: GET http://localhost:7070/ready
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 19:57:50,846 - DEBUG - <-- Response: GET http://localhost:7070/ready - Status 200
+Payload:
+{
+  "status": "ok",
+  "checks": {
+    "database": "ok",
+    "embedding": "ok:stub"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 19:57:51,484 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '144'}
+Payload:
+{
+  "query": "hello hello",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 8
+}
+2026-06-14 19:57:51,566 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "730269ab-a545-4a8a-8429-a6e85bb15934",
+  "items": [],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 6,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 19:57:52,187 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '146'}
+Payload:
+{
+  "query": "Teams message",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 8
+}
+2026-06-14 19:57:52,214 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "cb60e432-bb9a-48d9-bef1-2d96ad5a0562",
+  "items": [],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 6,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:19:13,255 - DEBUG - --> Request: GET http://localhost:7070/health
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:19:13,264 - DEBUG - <-- Response: GET http://localhost:7070/health - Status 200
+Payload:
+{
+  "status": "ok"
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:19:13,264 - DEBUG - --> Request: GET http://localhost:7070/ready
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json'}
+Payload:
+
+2026-06-14 20:19:13,268 - DEBUG - <-- Response: GET http://localhost:7070/ready - Status 200
+Payload:
+{
+  "status": "ok",
+  "checks": {
+    "database": "ok",
+    "embedding": "ok:stub"
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:19:19,621 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '144'}
+Payload:
+{
+  "query": "hello hello",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 8
+}
+2026-06-14 20:19:19,655 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "c67e43f2-1b86-4ee6-af90-693cfd38e91d",
+  "items": [],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 6,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------
+2026-06-14 20:19:30,496 - DEBUG - --> Request: POST http://localhost:7070/v1/query
+Headers: {'host': 'localhost:7070', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': 'Bearer mk_live_6bfc3231164d41e2a134b2b8efd01465_nJu2sY0dJxF6umJghDHx7VqIZ_neOePpUH8vd5b32zM', 'content-type': 'application/json', 'accept': 'application/json', 'content-length': '146'}
+Payload:
+{
+  "query": "Teams message",
+  "principal": {
+    "external_id": "testing-bot",
+    "display_name": "Mira Kontext Testing Bot",
+    "roles": [
+      "tester",
+      "admin"
+    ]
+  },
+  "limit": 8
+}
+2026-06-14 20:19:30,523 - DEBUG - <-- Response: POST http://localhost:7070/v1/query - Status 200
+Payload:
+{
+  "audit_id": "2fc4f482-ce6c-4d4c-ba65-55d847a73c9e",
+  "items": [],
+  "permission_counters": {
+    "denied_unknown_restricted_acl": 0,
+    "denied_role": 0,
+    "denied_not_participant": 0,
+    "denied_source_scope": 0,
+    "denied_source_collection": 6,
+    "denied_other": 0
+  }
+}
+--------------------------------------------------------------------------------

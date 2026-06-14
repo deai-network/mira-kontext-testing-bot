@@ -17,7 +17,9 @@ class Settings(BaseSettings):
     )
 
     # API Configuration
-    kontext_api_url: str = Field(default="http://localhost:8080")
+    # Canonical local port is 7070 (mira-kontext-api docker-compose + .env.example).
+    # The old 8080 default predated that; .env still overrides this when present.
+    kontext_api_url: str = Field(default="http://localhost:7070")
     kontext_token: str | None = Field(default=None)
 
     # Bot Identity

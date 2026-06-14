@@ -61,10 +61,29 @@ class ChatTurn(BaseModel):
     principal: Principal
 
 
-class ContextItem(BaseModel):
-    """A context item from the Kontext API."""
+class RelatedContextItem(BaseModel):
+    """A cross-source cluster sibling of a context item (API WI-5/WI-6).
 
-    model_config = ConfigDict(extra="forbid")
+    The server attaches these when a returned item shares a resolved entity with
+    another readable item. Already permission-intersected server-side.
+    """
+
+    model_config = ConfigDict(extra="ignore")
+
+    content_item_id: UUID
+    short_id: str
+    title: str | None = None
+    source_systems: list[str] = Field(default_factory=list)
+
+
+class ContextItem(BaseModel):
+    """A context item from the Kontext API.
+
+    Response-parsed model: `extra="ignore"` so additive server fields (per
+    AGENTS.md §1.2 forward-compatibility) never break the CLI again.
+    """
+
+    model_config = ConfigDict(extra="ignore")
 
     content_item_id: UUID
     short_id: str
@@ -73,12 +92,14 @@ class ContextItem(BaseModel):
     score: float
     metadata: dict[str, Any] = Field(default_factory=dict)
     citations: list[dict[str, Any]] = Field(default_factory=lambda: [])
+    # Added 2026-06-14: API now always serializes the cross-source cluster.
+    related_items: list[RelatedContextItem] = Field(default_factory=list)
 
 
 class QueryResult(BaseModel):
     """Result from a context query."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="ignore")
 
     audit_id: UUID
     items: list[ContextItem]
@@ -98,9 +119,12 @@ class IngestResult(BaseModel):
 
 
 class MemoryMessage(BaseModel):
-    """A stored conversation message."""
+    """A stored conversation message.
 
-    model_config = ConfigDict(extra="forbid")
+    Response-parsed model: `extra="ignore"` to tolerate additive server fields.
+    """
+
+    model_config = ConfigDict(extra="ignore")
 
     message_id: UUID
     content_item_id: UUID | None = None
